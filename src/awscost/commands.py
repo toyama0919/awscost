@@ -25,16 +25,6 @@ def cli(ctx, debug, profile):
     ctx.obj.profile = profile
 
 
-@cli.command(help='show cloudwatch billing')
-@click.option('--range', '-r', type=click.Choice(['month', 'week', 'day']), required=True)
-@click.option('--tablefmt', '-t', type=str, default='simple')
-@click.option('--point', '-p', type=int, default=10, help='number of greetings')
-@click.pass_context
-def list_billing(ctx, range, tablefmt, point):
-    currencies = ctx.obj.billing.get_currencies_per_service(range, point)
-    print(currencies)
-
-
 @cli.command(help='show cost explorer')
 @click.option('--granularity', '-g', type=click.Choice(['DAILY', 'MONTHLY']), default="MONTHLY")
 @click.option('--point', '-p', type=int, default=10, help='number of greetings')
@@ -55,6 +45,16 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
         group_by=group_by
     )
     Util.print_tabulate(currencies, tablefmt=tablefmt)
+
+
+@cli.command(help='show cloudwatch billing')
+@click.option('--range', '-r', type=click.Choice(['month', 'week', 'day']), required=True)
+@click.option('--tablefmt', '-t', type=str, default='simple')
+@click.option('--point', '-p', type=int, default=10, help='number of greetings')
+@click.pass_context
+def list_billing(ctx, range, tablefmt, point):
+    currencies = ctx.obj.billing.get_currencies_per_service(range, point)
+    print(currencies)
 
 
 def main():
