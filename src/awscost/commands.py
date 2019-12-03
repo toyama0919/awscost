@@ -1,5 +1,4 @@
 import click
-from datetime import timedelta
 from datetime import datetime
 from .logger import get_logger
 from .billing import Billing
@@ -13,9 +12,9 @@ class Mash(object):
     pass
 
 
-@click.group()
-@click.option('--debug/--no-debug', default=False, help='enable debug logging')
-@click.option('--profile', type=str, help='aws profile')
+@click.group(invoke_without_command=True)
+@click.option('--debug/--no-debug', default=False, help='enable debug logging. (default: False)')
+@click.option('--profile', type=str, help='aws profile name.')
 @click.pass_context
 def cli(ctx, debug, profile):
     ctx.obj = Mash()
@@ -25,13 +24,13 @@ def cli(ctx, debug, profile):
     ctx.obj.profile = profile
 
 
-@cli.command(help='show cost explorer')
-@click.option('--granularity', '-g', type=click.Choice(['DAILY', 'MONTHLY']), default="MONTHLY")
-@click.option('--point', '-p', type=int, default=10, help='number of greetings')
-@click.option('--start', type=str)
-@click.option('--end', type=str)
-@click.option('--tablefmt', '-t', type=str, default='simple')
-@click.option('--group-by', type=click.Choice(DIMENSIONS), multiple=True, default=['SERVICE'])
+@cli.command(help='list cost explorer')
+@click.option('--granularity', '-g', type=click.Choice(['DAILY', 'MONTHLY']), default="MONTHLY", help='granularity. (default: MONTHLY)')
+@click.option('--point', '-p', type=int, default=10, help='number of data point. (default: 10)')
+@click.option('--start', type=str, help='range of start day.')
+@click.option('--end', type=str, help='range of end day.')
+@click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
+@click.option('--group-by', type=click.Choice(DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
 @click.pass_context
 def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
     cost_explorer = CostExplorer(
@@ -47,10 +46,10 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
     print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
 
 
-@cli.command(help='show cloudwatch billing')
+@cli.command(help='list cloudwatch billing')
 @click.option('--range', '-r', type=click.Choice(['month', 'week', 'day']), required=True)
-@click.option('--tablefmt', '-t', type=str, default='simple')
-@click.option('--point', '-p', type=int, default=10, help='number of greetings')
+@click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
+@click.option('--point', '-p', type=int, default=10, help='number of data point. (default: 10)')
 @click.pass_context
 def list_billing(ctx, range, tablefmt, point):
     currencies = ctx.obj.billing.get_currencies_per_service(range, point)
