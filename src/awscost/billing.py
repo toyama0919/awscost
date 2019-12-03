@@ -20,17 +20,16 @@ class Billing:
         dateformat, period, delta = self._get_scale(scale_range, point)
         start_time = datetime.today() - relativedelta(days=delta)
         end_time = datetime.today()
-        result = []
+        result = {}
         for metric in self.metrics:
             dimensions = metric.get('Dimensions')
 
             datapoints = self._get_datapoints(dimensions, period, start_time, end_time)
-            last_timestamp = datapoints[-1].get('Timestamp').strftime(dateformat)
-
             service_name = self._get_service_name(dimensions)
-            row = self._get_service_cost(datapoints, service_name, metric, dateformat)
-            result.append(row)
-        return sorted(result, key=lambda x: x.get(last_timestamp), reverse=True)
+            self.logger.debug(service_name)
+            row = self._get_service_cost(datapoints, metric, dateformat)
+            result[service_name] = row
+        return result
 
     def _get_datapoints(self, dimensions, period, start_time, end_time):
         """
@@ -59,11 +58,11 @@ class Billing:
         ]
         return services[0].get('Value') if len(services) != 0 else "Total"
 
-    def _get_service_cost(self, datapoints, service_name, metric, dateformat):
+    def _get_service_cost(self, datapoints, metric, dateformat):
         """
         サービスごとのcostを取得する
         """
-        row = {"service_name": service_name}
+        row = {}
         for datapoint in datapoints:
             timestamp = datapoint.get('Timestamp').strftime(dateformat)
             maximum = datapoint.get('Maximum')
@@ -75,9 +74,9 @@ class Billing:
         datapointのscaleをmonth, week, dayで自動調節する
         """
         if scale_range == "month":
-            return '%y/%m', 60 * 60 * 24 * 30, 30 * point
+            return '%Y-%m', 60 * 60 * 24 * 30, 30 * point
         elif scale_range == "week":
-            return '%m/%d', 60 * 60 * 24 * 7, 7 * point
+            return '%m-%d', 60 * 60 * 24 * 7, 7 * point
         elif scale_range == "day":
-            return '%m/%d', 60 * 60 * 24, 1 * point
+            return '%m-%d', 60 * 60 * 24, 1 * point
         return '%m/%d', 86400, 1 * point

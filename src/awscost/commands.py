@@ -54,7 +54,7 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
 @click.pass_context
 def list_billing(ctx, range, tablefmt, point):
     currencies = ctx.obj.billing.get_currencies_per_service(range, point)
-    print(currencies)
+    Util.print_tabulate(currencies, tablefmt=tablefmt)
 
 
 def main():
