@@ -20,6 +20,7 @@ class CostExplorer:
 
         # totalとgroup byをmergeする
         merged = dict(total, **results)
+        self.logger.debug(merged)
         return merged
 
     def get_currencies_group_by(self, granularity, start, end, group_by=None):

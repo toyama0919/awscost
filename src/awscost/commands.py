@@ -44,7 +44,7 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
         end or datetime.today().strftime("%Y-%m-%d"),
         group_by=group_by
     )
-    Util.print_tabulate(currencies, tablefmt=tablefmt)
+    print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
 
 
 @cli.command(help='show cloudwatch billing')
@@ -54,7 +54,7 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
 @click.pass_context
 def list_billing(ctx, range, tablefmt, point):
     currencies = ctx.obj.billing.get_currencies_per_service(range, point)
-    Util.print_tabulate(currencies, tablefmt=tablefmt)
+    print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
 
 
 def main():

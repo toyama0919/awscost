@@ -4,7 +4,7 @@ from tabulate import tabulate
 class Util:
 
     @staticmethod
-    def print_tabulate(results, tablefmt="simple"):
+    def convert_tabulate(results, tablefmt="simple"):
         converts = []
         for k, amounts in results.items():
             converts.append(dict({"key": k}, **amounts))
@@ -14,4 +14,4 @@ class Util:
             key=lambda x: 0 if x.get(last_time) is None else x.get(last_time),
             reverse=True
         )
-        print(tabulate(converts, headers="keys", tablefmt=tablefmt))
+        return tabulate(converts, headers="keys", tablefmt=tablefmt)
