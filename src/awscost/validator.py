@@ -1,11 +1,13 @@
 import click
+from datetime import datetime
 
 
 class Validator:
 
     @staticmethod
-    def validate_suffix(ctx, param, value):
-        if '-' in value:
-            raise click.BadParameter('Do not include "-"')
-        else:
-            return value
+    def validate_dateformat(ctx, param, value):
+        try:
+            datetime.strptime(value, '%Y-%m-%d')
+        except:
+            raise click.BadParameter(f"please input dateformat parameter. ('%Y-%m-%d')")
+        return value

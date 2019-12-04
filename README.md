@@ -30,7 +30,9 @@ Usage: awscost list-ce [OPTIONS]
 Options:
   -g, --granularity [DAILY|MONTHLY]
                                   granularity. (default: MONTHLY)
-  -p, --point INTEGER             number of data point. (default: 10)
+  -p, --point INTEGER             duration. if granularity is MONTHLY, 10
+                                  month ago start. if granularity is DAILY, 10
+                                  day ago start. (default: 10)
   --start TEXT                    range of start day. default is 10 month ago.
   --end TEXT                      range of end day. default is now.
   -t, --tablefmt TEXT             tabulate format. (default: simple)
