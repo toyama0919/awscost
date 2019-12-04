@@ -5,7 +5,7 @@ from .billing import Billing
 from .cost_explorer import CostExplorer
 from .util import Util
 from .date_util import DateUtil
-from .constants import DIMENSIONS
+from . import constants
 
 
 class Mash(object):
@@ -28,7 +28,7 @@ def cli(ctx, debug, profile):
 @click.option('--start', type=str, help='range of start day. default is 10 month ago.')
 @click.option('--end', type=str, help='range of end day. default is now.')
 @click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
-@click.option('--group-by', type=click.Choice(DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
+@click.option('--group-by', type=click.Choice(constants.DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
 @click.option('--filter', type=json.loads, help='filter of dimensions. default is no filter.')
 @click.pass_context
 def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter):
