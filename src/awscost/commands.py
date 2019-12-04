@@ -19,8 +19,6 @@ class Mash(object):
 @click.pass_context
 def cli(ctx, debug, profile):
     ctx.obj = Mash()
-    ctx.obj.billing = Billing(debug, profile)
-    ctx.obj.logger = get_logger(debug)
     ctx.obj.debug = debug
     ctx.obj.profile = profile
 
@@ -55,7 +53,8 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter):
 @click.option('--point', '-p', type=int, default=10, help='number of data point. (default: 10)')
 @click.pass_context
 def list_billing(ctx, range, tablefmt, point):
-    currencies = ctx.obj.billing.get_currencies_per_service(range, point)
+    billing = Billing(ctx.obj.debug, ctx.obj.profile)
+    currencies = billing.get_currencies_per_service(range, point)
     print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
 
 
