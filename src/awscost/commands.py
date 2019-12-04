@@ -1,7 +1,6 @@
 import click
 import json
 from datetime import datetime
-from .logger import get_logger
 from .billing import Billing
 from .cost_explorer import CostExplorer
 from .util import Util

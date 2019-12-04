@@ -31,10 +31,10 @@ Options:
   -g, --granularity [DAILY|MONTHLY]
                                   granularity. (default: MONTHLY)
   -p, --point INTEGER             number of data point. (default: 10)
-  --start TEXT                    range of start day.
-  --end TEXT                      range of end day.
+  --start TEXT                    range of start day. default is 10 month ago.
+  --end TEXT                      range of end day. default is now.
   -t, --tablefmt TEXT             tabulate format. (default: simple)
-  --group-by [AZ|INSTANCE_TYPE|LINKED_ACCOUNT|OPERATION|PURCHASE_TYPE|REGION|SERVICE|USAGE_TYPE|USAGE_TYPE_GROUP|RECORD_TYPE|OPERATING_SYSTEM|TENANCY|SCOPE|PLATFORM|SUBSCRIPTION_ID|LEGAL_ENTITY_NAME|DEPLOYMENT_OPTION|DATABASE_ENGINE|CACHE_ENGINE|INSTANCE_TYPE_FAMILY|BILLING_ENTITY|RESERVATION_ID|RESOURCE_ID|RIGHTSIZING_TYPE|SAVINGS_PLANS_TYPE|SAVINGS_PLAN_ARN|PAYMENT_OPTION]
+  --group-by [AZ|INSTANCE_TYPE|LINKED_ACCOUNT|OPERATION|PURCHASE_TYPE|SERVICE|USAGE_TYPE|PLATFORM|TENANCY|RECORD_TYPE|LEGAL_ENTITY_NAME|DEPLOYMENT_OPTION|DATABASE_ENGINE|CACHE_ENGINE|INSTANCE_TYPE_FAMILY|REGION|BILLING_ENTITY|RESERVATION_ID|SAVINGS_PLANS_TYPE|SAVINGS_PLAN_ARN|OPERATING_SYSTEM]
                                   group by keys. (default: ["SERVICE"])
   --filter LOADS                  filter of dimensions. default is no filter.
   --help                          Show this message and exit.
