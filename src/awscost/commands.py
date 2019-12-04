@@ -24,7 +24,7 @@ def cli(ctx, debug, profile):
 
 @cli.command(help='list cost explorer')
 @click.option('--granularity', '-g', type=click.Choice(['DAILY', 'MONTHLY']), default="MONTHLY", help='granularity. (default: MONTHLY)')
-@click.option('--point', '-p', type=int, default=10, help='number of data point. (default: 10)')
+@click.option('--point', '-p', type=int, default=10, help='duration. if granularity is MONTHLY, 10 month ago start. if granularity is DAILY, 10 day ago start. (default: 10)')
 @click.option('--start', type=str, help='range of start day. default is 10 month ago.')
 @click.option('--end', type=str, help='range of end day. default is now.')
 @click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
