@@ -27,7 +27,7 @@ def cli(ctx, debug, profile):
 @click.option('--granularity', '-g', type=click.Choice(['DAILY', 'MONTHLY']), default="MONTHLY", help='granularity. (default: MONTHLY)')
 @click.option('--point', '-p', type=int, default=10, help='duration. if granularity is MONTHLY, 10 month ago start. if granularity is DAILY, 10 day ago start. (default: 10)')
 @click.option('--start', callback=Validator.validate_dateformat, type=str, help='range of start day. default is 10 month ago.')
-@click.option('--end', callback=Validator.validate_dateformat, type=str, help='range of end day. default is now.')
+@click.option('--end', callback=Validator.validate_dateformat, type=str, default=datetime.today().strftime("%Y-%m-%d"), help='range of end day. default is now.')
 @click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
 @click.option('--group-by', type=click.Choice(constants.DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
 @click.option('--filter', type=json.loads, help='filter of dimensions. default is no filter.')
@@ -40,7 +40,7 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter):
     currencies = cost_explorer.get_currencies_total_and_group_by(
         granularity,
         start or DateUtil.get_start(granularity, point),
-        end or datetime.today().strftime("%Y-%m-%d"),
+        end,
         group_by=group_by,
         filter_dimensions=filter
     )

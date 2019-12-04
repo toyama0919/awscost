@@ -6,6 +6,9 @@ class Validator:
 
     @staticmethod
     def validate_dateformat(ctx, param, value):
+        if value is None:
+            return value
+
         try:
             datetime.strptime(value, '%Y-%m-%d')
         except:
