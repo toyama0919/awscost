@@ -1,4 +1,5 @@
 import click
+import json
 from datetime import datetime
 from .logger import get_logger
 from .billing import Billing
@@ -31,8 +32,9 @@ def cli(ctx, debug, profile):
 @click.option('--end', type=str, help='range of end day.')
 @click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
 @click.option('--group-by', type=click.Choice(DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
+@click.option('--filter', type=json.loads, help='filter of dimensions. default is no filter.')
 @click.pass_context
-def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
+def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter):
     cost_explorer = CostExplorer(
         debug=ctx.obj.debug,
         profile=ctx.obj.profile
@@ -41,7 +43,8 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by):
         granularity,
         start or DateUtil.get_start(granularity, point),
         end or datetime.today().strftime("%Y-%m-%d"),
-        group_by=group_by
+        group_by=group_by,
+        filter_dimensions=filter
     )
     print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
 

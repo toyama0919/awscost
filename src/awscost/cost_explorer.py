@@ -8,7 +8,7 @@ class CostExplorer:
         self.client = Session(profile_name=profile).client('ce', region_name='us-east-1')
         self.logger = get_logger(debug=debug)
 
-    def get_currencies_total_and_group_by(self, granularity, start, end, group_by=None):
+    def get_currencies_total_and_group_by(self, granularity, start, end, group_by=None, filter_dimensions=None):
         """
         startとendを指定してcostの時系列データを取得する
         """
@@ -16,14 +16,14 @@ class CostExplorer:
         total = self.get_currencies_total(granularity, start, end)
 
         # group別を取得
-        results = self.get_currencies_group_by(granularity, start, end, group_by=group_by)
+        results = self.get_currencies_group_by(granularity, start, end, group_by=group_by, filter_dimensions=filter_dimensions)
 
         # totalとgroup byをmergeする
         merged = dict(total, **results)
         self.logger.debug(merged)
         return merged
 
-    def get_currencies_group_by(self, granularity, start, end, group_by=None):
+    def get_currencies_group_by(self, granularity, start, end, group_by=None, filter_dimensions=None):
         """
         startとendを指定してcostの時系列データを取得する
         """
@@ -34,7 +34,7 @@ class CostExplorer:
             }
             for key in group_by
         ]
-        cost_and_usage_per_service = self._get_cost_and_usage(granularity, start, end, group_by=group_by)
+        cost_and_usage_per_service = self._get_cost_and_usage(granularity, start, end, group_by=group_by, filter_dimensions=filter_dimensions)
         results = self._convert_results_group_by(cost_and_usage_per_service, granularity)
         self.logger.debug(results)
         return results
@@ -48,6 +48,28 @@ class CostExplorer:
         total = self._convert_results_total(cost_and_usage, granularity)
         self.logger.debug(total)
         return total
+
+    def _get_cost_and_usage(self, granularity, start, end, group_by=None, filter_dimensions=None):
+        """
+        datapointのscaleをmonth, week, dayで自動調節する
+        """
+        params = dict(
+            TimePeriod={
+                'Start': start,
+                'End': end
+            },
+            Granularity=granularity,
+            Metrics=[
+                'UnblendedCost',
+            ],
+        )
+        if group_by is not None:
+            params["GroupBy"] = group_by
+        if filter_dimensions is not None:
+            params["Filter"] = {'Dimensions': filter_dimensions}
+        self.logger.debug(params)
+        response = self.client.get_cost_and_usage(**params)
+        return response.get("ResultsByTime")
 
     def _convert_results_group_by(self, cost_and_usage_per_service, granularity):
         """
@@ -81,26 +103,6 @@ class CostExplorer:
             amount = metrics.get('UnblendedCost').get('Amount')
             results["Total"][time_key] = round(float(amount), 2)
         return results
-
-    def _get_cost_and_usage(self, granularity, start, end, group_by=None):
-        """
-        datapointのscaleをmonth, week, dayで自動調節する
-        """
-        params = dict(
-            TimePeriod={
-                'Start': start,
-                'End': end
-            },
-            Granularity=granularity,
-            Metrics=[
-                'UnblendedCost',
-            ],
-        )
-        if group_by is not None:
-            params["GroupBy"] = group_by
-        self.logger.debug(params)
-        response = self.client.get_cost_and_usage(**params)
-        return response.get("ResultsByTime")
 
     def _convert_period(self, granularity, start_period):
         """
