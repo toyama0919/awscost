@@ -34,7 +34,7 @@ class CostExplorer:
             }
             for key in group_by
         ]
-        cost_and_usage_per_service = self._get_cost_and_usage(granularity, start, end, group_by=group_by, filter_dimensions=filter_dimensions)
+        cost_and_usage_per_service = self.get_cost_and_usage(granularity, start, end, group_by=group_by, filter_dimensions=filter_dimensions)
         results = self._convert_results_group_by(cost_and_usage_per_service, granularity)
         self.logger.debug(results)
         return results
@@ -44,14 +44,14 @@ class CostExplorer:
         startとendを指定してcostの時系列データを取得する
         """
         # totalを取得
-        cost_and_usage = self._get_cost_and_usage(granularity, start, end)
+        cost_and_usage = self.get_cost_and_usage(granularity, start, end)
         total = self._convert_results_total(cost_and_usage, granularity)
         self.logger.debug(total)
         return total
 
-    def _get_cost_and_usage(self, granularity, start, end, group_by=None, filter_dimensions=None):
+    def get_cost_and_usage(self, granularity, start, end, group_by=None, filter_dimensions=None):
         """
-        datapointのscaleをmonth, week, dayで自動調節する
+        cost explorerのAPIを実行
         """
         params = dict(
             TimePeriod={
@@ -106,8 +106,8 @@ class CostExplorer:
 
     def _convert_period(self, granularity, start_period):
         """
-        datapointのscaleをmonth, week, dayで自動調節する
+        headerに表示させる日付をmonthlyとdailyで切り替え
         """
         if granularity == "MONTHLY":
             return datetime.strptime(start_period, '%Y-%m-%d').strftime('%Y-%m')
-        return start_period
+        return datetime.strptime(start_period, '%Y-%m-%d').strftime('%m-%d')
