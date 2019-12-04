@@ -13,7 +13,7 @@ version = '0.0.1'
 install_requires = [
     'tabulate',
     'boto3',
-    'click'
+    'click>=7.0'
 ]
 
 setup(
