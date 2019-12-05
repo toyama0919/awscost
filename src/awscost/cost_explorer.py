@@ -1,6 +1,7 @@
 from datetime import datetime
 from .logger import get_logger
 from .cost_explorer_client import CostExplorerClient
+from . import constants
 
 
 class CostExplorer:
@@ -11,6 +12,7 @@ class CostExplorer:
         end,
         group_by=[],
         filter_dimensions=None,
+        metrics=constants.DEFAULT_METRICS,
         profile=None,
         debug=False
     ):
@@ -19,11 +21,13 @@ class CostExplorer:
             start,
             end,
             filter_dimensions=filter_dimensions,
+            metrics=metrics,
             profile=profile,
             debug=debug
         )
         self.granularity = granularity
         self.group_by = group_by
+        self.metrics = metrics
         self.logger = get_logger(debug=debug)
 
     def get_cost_and_usage_total_and_group_by(self):
@@ -76,7 +80,7 @@ class CostExplorer:
                 else:
                     results[group_by_key] = results.get(group_by_key)
                 metrics = group.get('Metrics')
-                amount = metrics.get('UnblendedCost').get('Amount')
+                amount = metrics.get(self.metrics).get('Amount')
                 results[group_by_key][time_key] = round(float(amount), 2)
         return results
 
@@ -89,7 +93,7 @@ class CostExplorer:
             start_period = result.get('TimePeriod').get('Start')
             time_key = self._convert_period(start_period)
             metrics = result.get('Total')
-            amount = metrics.get('UnblendedCost').get('Amount')
+            amount = metrics.get(self.metrics).get('Amount')
             results["Total"][time_key] = round(float(amount), 2)
         return results
 

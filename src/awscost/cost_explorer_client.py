@@ -9,6 +9,7 @@ class CostExplorerClient:
         start,
         end,
         filter_dimensions=None,
+        metrics=None,
         profile=None,
         debug=False
     ):
@@ -16,6 +17,7 @@ class CostExplorerClient:
         self.start = start
         self.end = end
         self.filter_dimensions = filter_dimensions
+        self.metrics = metrics
         self.client = Session(profile_name=profile).client('ce', region_name='us-east-1')
         self.logger = get_logger(debug=debug)
 
@@ -30,7 +32,7 @@ class CostExplorerClient:
             },
             Granularity=self.granularity,
             Metrics=[
-                'UnblendedCost',
+                self.metrics,
             ],
         )
         group_by = self._get_group_by(group_by)

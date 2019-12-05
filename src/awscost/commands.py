@@ -31,14 +31,16 @@ def cli(ctx, debug, profile):
 @click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
 @click.option('--group-by', type=click.Choice(constants.DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
 @click.option('--filter', type=json.loads, help='filter of dimensions. default is no filter.')
+@click.option('--metrics', type=str, default=constants.DEFAULT_METRICS, help='metrics. (default: UnblendedCost)')
 @click.pass_context
-def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter):
+def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter, metrics):
     cost_explorer = CostExplorer(
         granularity,
         start or DateUtil.get_start(granularity, point),
         end,
         group_by=group_by,
         filter_dimensions=filter,
+        metrics=metrics,
         debug=ctx.obj.debug,
         profile=ctx.obj.profile
     )

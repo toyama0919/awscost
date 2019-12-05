@@ -22,3 +22,5 @@ DIMENSIONS = [
     'SAVINGS_PLAN_ARN',
     'OPERATING_SYSTEM'
 ]
+
+DEFAULT_METRICS = "UnblendedCost"
