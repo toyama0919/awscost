@@ -1,8 +1,5 @@
 # awscost
 
-
-
-
 [![PyPI version](https://badge.fury.io/py/awscost.svg)](https://badge.fury.io/py/awscost)
 [![Build Status](https://secure.travis-ci.org/toyama0919/awscost.png?branch=master)](http://travis-ci.org/toyama0919/awscost)
 
@@ -15,38 +12,18 @@ Support python3 only. (use boto3)
 aws auth support following.
 
 * environment
-* profile
+* profile(use --profile option.)
 * instance profile
 
 ## Examples
 
 ### list-ce
 
-```sh
-Usage: awscost list-ce [OPTIONS]
-
-  list cost explorer
-
-Options:
-  -g, --granularity [DAILY|MONTHLY]
-                                  granularity. (default: MONTHLY)
-  -p, --point INTEGER             duration. if granularity is MONTHLY, 10
-                                  month ago start. if granularity is DAILY, 10
-                                  day ago start. (default: 10)
-  --start TEXT                    range of start day. default is 10 month ago.
-  --end TEXT                      range of end day. default is now.
-  -t, --tablefmt TEXT             tabulate format. (default: simple)
-  --group-by [AZ|INSTANCE_TYPE|LINKED_ACCOUNT|OPERATION|PURCHASE_TYPE|SERVICE|USAGE_TYPE|PLATFORM|TENANCY|RECORD_TYPE|LEGAL_ENTITY_NAME|DEPLOYMENT_OPTION|DATABASE_ENGINE|CACHE_ENGINE|INSTANCE_TYPE_FAMILY|REGION|BILLING_ENTITY|RESERVATION_ID|SAVINGS_PLANS_TYPE|SAVINGS_PLAN_ARN|OPERATING_SYSTEM]
-                                  group by keys. (default: ["SERVICE"])
-  --filter LOADS                  filter of dimensions. default is no filter.
-  --help                          Show this message and exit.
-```
-
 ### show cost
 
 show cost latest 5 months.
 
-```sh
+```bash
 $ awscost list-ce -g MONTHLY -p 5
 key                                       2019-07    2019-08    2019-09    2019-10    2019-11    2019-12
 --------------------------------------  ---------  ---------  ---------  ---------  ---------  ---------
@@ -71,7 +48,7 @@ Amazon Simple Queue Service                                                     
 
 show cost latest 3 days, group by SERVICE and operation.
 
-```sh
+```bash
 $ awscost list-ce -g DAILY -p 3 --group-by SERVICE --group-by OPERATION
 key                                                             2019-12-01    2019-12-02    2019-12-03
 ------------------------------------------------------------  ------------  ------------  ------------

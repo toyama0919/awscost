@@ -4,6 +4,7 @@ import os
 here = os.path.abspath(os.path.dirname(__file__))
 try:
     import pypandoc
+    print("use pypandoc")
     long_description = pypandoc.convert('README.md', 'rst')
 except(IOError, ImportError):
     long_description = open(os.path.join(here, 'README.md')).read()
@@ -22,6 +23,7 @@ setup(
     version=version,
     description="Command Line utility for Amazon Aurora.",
     long_description=long_description,
+    long_description_content_type='text/markdown',
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
