@@ -14,8 +14,16 @@ class Mash(object):
 
 
 @click.group(invoke_without_command=True)
-@click.option('--debug/--no-debug', default=False, help='enable debug logging. (default: False)')
-@click.option('--profile', type=str, help='aws profile name.')
+@click.option(
+    '--debug/--no-debug',
+    default=False,
+    help='enable debug logging. (default: False)'
+)
+@click.option(
+    '--profile',
+    type=str,
+    help='aws profile name.'
+)
 @click.pass_context
 def cli(ctx, debug, profile):
     ctx.obj = Mash()
