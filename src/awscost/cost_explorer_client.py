@@ -8,7 +8,6 @@ class CostExplorerClient:
         granularity,
         start,
         end,
-        group_by=[],
         filter_dimensions=None,
         profile=None,
         debug=False

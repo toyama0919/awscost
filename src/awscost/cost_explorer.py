@@ -18,7 +18,6 @@ class CostExplorer:
             granularity,
             start,
             end,
-            group_by=group_by,
             filter_dimensions=filter_dimensions,
             profile=profile,
             debug=debug
