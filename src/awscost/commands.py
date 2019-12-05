@@ -34,16 +34,15 @@ def cli(ctx, debug, profile):
 @click.pass_context
 def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter):
     cost_explorer = CostExplorer(
-        debug=ctx.obj.debug,
-        profile=ctx.obj.profile
-    )
-    currencies = cost_explorer.get_currencies_total_and_group_by(
         granularity,
         start or DateUtil.get_start(granularity, point),
         end,
         group_by=group_by,
-        filter_dimensions=filter
+        filter_dimensions=filter,
+        debug=ctx.obj.debug,
+        profile=ctx.obj.profile
     )
+    currencies = cost_explorer.get_cost_and_usage_total_and_group_by()
     print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
 
 
