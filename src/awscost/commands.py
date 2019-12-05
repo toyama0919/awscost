@@ -43,14 +43,14 @@ def cli(ctx, debug, profile):
     '--point',
     '-p',
     type=int,
-    default=10,
-    help='duration. if granularity is MONTHLY, 10 month ago start. if granularity is DAILY, 10 day ago start. (default: 10)'
+    default=constants.DEFAULT_POINT,
+    help=f'duration. if granularity is MONTHLY, {constants.DEFAULT_POINT} month ago start. if granularity is DAILY, {constants.DEFAULT_POINT} day ago start. (default: {constants.DEFAULT_POINT})'
 )
 @click.option(
     '--start',
     callback=Validator.validate_dateformat,
     type=str,
-    help='range of start day. default is 10 month ago.'
+    help=f'range of start day. default is {constants.DEFAULT_POINT} month ago.'
 )
 @click.option(
     '--end',
@@ -118,8 +118,8 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter, met
     '--point',
     '-p',
     type=int,
-    default=10,
-    help='number of data point. (default: 10)'
+    default=constants.DEFAULT_POINT,
+    help=f'number of data point. (default: {constants.DEFAULT_POINT})'
 )
 @click.pass_context
 def list_billing(ctx, range, tablefmt, point):
