@@ -29,9 +29,9 @@ def cli(ctx, debug, profile):
 @click.option('--start', callback=Validator.validate_dateformat, type=str, help='range of start day. default is 10 month ago.')
 @click.option('--end', callback=Validator.validate_dateformat, type=str, default=datetime.today().strftime("%Y-%m-%d"), help='range of end day. default is now.')
 @click.option('--tablefmt', '-t', type=str, default='simple', help='tabulate format. (default: simple)')
-@click.option('--group-by', type=click.Choice(constants.DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
+@click.option('--group-by', type=click.Choice(constants.AVAILABLE_DIMENSIONS), multiple=True, default=['SERVICE'], help='group by keys. (default: ["SERVICE"])')
 @click.option('--filter', type=json.loads, help='filter of dimensions. default is no filter.')
-@click.option('--metrics', type=str, default=constants.DEFAULT_METRICS, help='metrics. (default: UnblendedCost)')
+@click.option('--metrics', type=click.Choice(constants.AVAILABLE_METRICS), default=constants.DEFAULT_METRICS, help='metrics. (default: UnblendedCost)')
 @click.pass_context
 def list_ce(ctx, granularity, point, start, end, tablefmt, group_by, filter, metrics):
     cost_explorer = CostExplorer(

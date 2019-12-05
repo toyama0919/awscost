@@ -1,5 +1,5 @@
 
-DIMENSIONS = [
+AVAILABLE_DIMENSIONS = [
     'AZ',
     'INSTANCE_TYPE',
     'LINKED_ACCOUNT',
@@ -21,6 +21,16 @@ DIMENSIONS = [
     'SAVINGS_PLANS_TYPE',
     'SAVINGS_PLAN_ARN',
     'OPERATING_SYSTEM'
+]
+
+AVAILABLE_METRICS = [
+    "BlendedCost",
+    "UnblendedCost",
+    "AmortizedCost",
+    "NetAmortizedCost",
+    "NetUnblendedCost",
+    "UsageQuantity",
+    "NormalizedUsageAmount"
 ]
 
 DEFAULT_METRICS = "UnblendedCost"
