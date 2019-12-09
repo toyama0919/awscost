@@ -2,14 +2,7 @@ from setuptools import setup, find_packages
 import os
 
 here = os.path.abspath(os.path.dirname(__file__))
-try:
-    import pypandoc
-
-    print("use pypandoc")
-    long_description = pypandoc.convert("README.md", "rst")
-except (IOError, ImportError):
-    long_description = open(os.path.join(here, "README.md")).read()
-
+print(open(os.path.join(here, "README.md")).read())
 version = "0.0.1"
 
 install_requires = ["tabulate", "boto3", "click>=7.0"]
@@ -18,14 +11,14 @@ setup(
     name="awscost",
     scripts=["bin/awscost"],
     version=version,
-    description="Command Line utility for Amazon Aurora.",
-    long_description=long_description,
+    description="Command Line utility for cost of aws.",
+    long_description=open(os.path.join(here, "README.md")).read(),
     long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
     ],
-    keywords="awscost tool",
+    keywords="awscost tool aws",
     author="Hiroshi Toyama",
     author_email="toyama0919@gmail.com",
     url="https://github.com/toyama0919/awscost",

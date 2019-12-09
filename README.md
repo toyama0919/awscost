@@ -5,7 +5,7 @@
 
 Command Line utility for cost of aws.
 
-Support python3 only. (use boto3)
+Supports python 3.6 or later.
 
 ## Settings
 
