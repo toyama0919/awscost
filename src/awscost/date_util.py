@@ -3,7 +3,6 @@ from datetime import datetime
 
 
 class DateUtil:
-
     @staticmethod
     def get_start(granularity, point):
         """
@@ -14,7 +13,7 @@ class DateUtil:
         elif granularity == "DAILY":
             days = point
 
-        start_datetime = (datetime.today() - timedelta(days=days))
+        start_datetime = datetime.today() - timedelta(days=days)
         if granularity == "MONTHLY":
             start_datetime = start_datetime.replace(day=1)
-        return start_datetime.strftime('%Y-%m-%d')
+        return start_datetime.strftime("%Y-%m-%d")

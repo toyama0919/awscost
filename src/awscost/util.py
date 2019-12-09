@@ -2,7 +2,6 @@ from tabulate import tabulate
 
 
 class Util:
-
     @staticmethod
     def convert_tabulate(results, tablefmt="simple"):
         converts = []
@@ -12,6 +11,6 @@ class Util:
         converts = sorted(
             converts,
             key=lambda x: 0 if x.get(last_time) is None else x.get(last_time),
-            reverse=True
+            reverse=True,
         )
         return tabulate(converts, headers="keys", tablefmt=tablefmt)

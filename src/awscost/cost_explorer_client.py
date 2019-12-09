@@ -11,14 +11,16 @@ class CostExplorerClient:
         filter_dimensions=None,
         metrics=None,
         profile=None,
-        debug=False
+        debug=False,
     ):
         self.granularity = granularity
         self.start = start
         self.end = end
         self.filter_dimensions = filter_dimensions
         self.metrics = metrics
-        self.client = Session(profile_name=profile).client('ce', region_name='us-east-1')
+        self.client = Session(profile_name=profile).client(
+            "ce", region_name="us-east-1"
+        )
         self.logger = get_logger(debug=debug)
 
     def get_cost_and_usage(self, group_by=None):
@@ -26,20 +28,15 @@ class CostExplorerClient:
         cost explorerのAPIを実行
         """
         params = dict(
-            TimePeriod={
-                'Start': self.start,
-                'End': self.end
-            },
+            TimePeriod={"Start": self.start, "End": self.end},
             Granularity=self.granularity,
-            Metrics=[
-                self.metrics,
-            ],
+            Metrics=[self.metrics,],
         )
         group_by = self._get_group_by(group_by)
         if group_by is not None:
             params["GroupBy"] = group_by
         if self.filter_dimensions is not None:
-            params["Filter"] = {'Dimensions': self.filter_dimensions}
+            params["Filter"] = {"Dimensions": self.filter_dimensions}
         self.logger.debug(params)
         response = self.client.get_cost_and_usage(**params)
         return response.get("ResultsByTime")
@@ -50,10 +47,4 @@ class CostExplorerClient:
         """
         if group_by is None:
             return None
-        return [
-            {
-                'Type': 'DIMENSION',
-                'Key': key
-            }
-            for key in group_by
-        ]
+        return [{"Type": "DIMENSION", "Key": key} for key in group_by]

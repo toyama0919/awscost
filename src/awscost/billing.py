@@ -6,12 +6,12 @@ from boto3.session import Session
 
 class Billing:
     def __init__(self, debug, profile):
-        self.client = Session(profile_name=profile).client('cloudwatch', region_name='us-east-1')
-        self.logger = get_logger(debug)
-        response = self.client.list_metrics(
-            Namespace='AWS/Billing'
+        self.client = Session(profile_name=profile).client(
+            "cloudwatch", region_name="us-east-1"
         )
-        self.metrics = response.get('Metrics')
+        self.logger = get_logger(debug)
+        response = self.client.list_metrics(Namespace="AWS/Billing")
+        self.metrics = response.get("Metrics")
 
     def get_currencies_per_service(self, scale_range, point):
         """
@@ -22,7 +22,7 @@ class Billing:
         end_time = datetime.today()
         result = {}
         for metric in self.metrics:
-            dimensions = metric.get('Dimensions')
+            dimensions = metric.get("Dimensions")
 
             datapoints = self._get_datapoints(dimensions, period, start_time, end_time)
             service_name = self._get_service_name(dimensions)
@@ -36,15 +36,15 @@ class Billing:
         datapoints(サービス単位のcostの時系列データ)を取得する
         """
         response = self.client.get_metric_statistics(
-            Namespace='AWS/Billing',
-            MetricName='EstimatedCharges',
+            Namespace="AWS/Billing",
+            MetricName="EstimatedCharges",
             Dimensions=dimensions,
             StartTime=start_time,
             EndTime=end_time,
             Period=period,
-            Statistics=['Maximum']
+            Statistics=["Maximum"],
         )
-        return sorted(response.get('Datapoints'), key=lambda x: x.get('Timestamp'))
+        return sorted(response.get("Datapoints"), key=lambda x: x.get("Timestamp"))
 
     def _get_service_name(self, dimensions):
         """
@@ -54,9 +54,9 @@ class Billing:
         services = [
             dimension
             for dimension in dimensions
-            if dimension.get('Name') == "ServiceName"
+            if dimension.get("Name") == "ServiceName"
         ]
-        return services[0].get('Value') if len(services) != 0 else "Total"
+        return services[0].get("Value") if len(services) != 0 else "Total"
 
     def _get_service_cost(self, datapoints, metric, dateformat):
         """
@@ -64,8 +64,8 @@ class Billing:
         """
         row = {}
         for datapoint in datapoints:
-            timestamp = datapoint.get('Timestamp').strftime(dateformat)
-            maximum = datapoint.get('Maximum')
+            timestamp = datapoint.get("Timestamp").strftime(dateformat)
+            maximum = datapoint.get("Maximum")
             row[timestamp] = maximum
         return row
 
@@ -74,9 +74,9 @@ class Billing:
         datapointのscaleをmonth, week, dayで自動調節する
         """
         if scale_range == "month":
-            return '%Y-%m', 60 * 60 * 24 * 30, 30 * point
+            return "%Y-%m", 60 * 60 * 24 * 30, 30 * point
         elif scale_range == "week":
-            return '%m-%d', 60 * 60 * 24 * 7, 7 * point
+            return "%m-%d", 60 * 60 * 24 * 7, 7 * point
         elif scale_range == "day":
-            return '%m-%d', 60 * 60 * 24, 1 * point
-        return '%m/%d', 86400, 1 * point
+            return "%m-%d", 60 * 60 * 24, 1 * point
+        return "%m/%d", 86400, 1 * point

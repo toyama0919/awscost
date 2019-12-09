@@ -14,7 +14,7 @@ class CostExplorer:
         filter_dimensions=None,
         metrics=constants.DEFAULT_METRICS,
         profile=None,
-        debug=False
+        debug=False,
     ):
         self.cost_explorer_client = CostExplorerClient(
             granularity,
@@ -23,7 +23,7 @@ class CostExplorer:
             filter_dimensions=filter_dimensions,
             metrics=metrics,
             profile=profile,
-            debug=debug
+            debug=debug,
         )
         self.granularity = granularity
         self.group_by = group_by
@@ -59,7 +59,9 @@ class CostExplorer:
         """
         startとendを指定してcostの時系列データを取得する
         """
-        cost_and_usage_per_service = self.cost_explorer_client.get_cost_and_usage(group_by=self.group_by)
+        cost_and_usage_per_service = self.cost_explorer_client.get_cost_and_usage(
+            group_by=self.group_by
+        )
         results = self._convert_results_group_by(cost_and_usage_per_service)
         self.logger.debug(results)
         return results
@@ -70,17 +72,17 @@ class CostExplorer:
         """
         results = {}
         for result in cost_and_usage_per_service:
-            start_period = result.get('TimePeriod').get('Start')
+            start_period = result.get("TimePeriod").get("Start")
             time_key = self._convert_period(start_period)
-            groups = result.get('Groups')
+            groups = result.get("Groups")
             for group in groups:
-                group_by_key = ','.join(group.get('Keys'))
+                group_by_key = ",".join(group.get("Keys"))
                 if results.get(group_by_key) is None:
                     results[group_by_key] = {}
                 else:
                     results[group_by_key] = results.get(group_by_key)
-                metrics = group.get('Metrics')
-                amount = metrics.get(self.metrics).get('Amount')
+                metrics = group.get("Metrics")
+                amount = metrics.get(self.metrics).get("Amount")
                 results[group_by_key][time_key] = round(float(amount), 2)
         return results
 
@@ -90,10 +92,10 @@ class CostExplorer:
         """
         results = {"Total": {}}
         for result in cost_and_usage_per_service:
-            start_period = result.get('TimePeriod').get('Start')
+            start_period = result.get("TimePeriod").get("Start")
             time_key = self._convert_period(start_period)
-            metrics = result.get('Total')
-            amount = metrics.get(self.metrics).get('Amount')
+            metrics = result.get("Total")
+            amount = metrics.get(self.metrics).get("Amount")
             results["Total"][time_key] = round(float(amount), 2)
         return results
 
@@ -102,5 +104,5 @@ class CostExplorer:
         headerに表示させる日付をmonthlyとdailyで切り替え
         """
         if self.granularity == "MONTHLY":
-            return datetime.strptime(start_period, '%Y-%m-%d').strftime('%Y-%m')
-        return datetime.strptime(start_period, '%Y-%m-%d').strftime('%m-%d')
+            return datetime.strptime(start_period, "%Y-%m-%d").strftime("%Y-%m")
+        return datetime.strptime(start_period, "%Y-%m-%d").strftime("%m-%d")

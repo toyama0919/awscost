@@ -26,5 +26,5 @@ class UtilTest(unittest.TestCase):
         self.assertEqual("2010-01-01", Util.datetime_handler(date))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
