@@ -23,16 +23,16 @@ class CostExplorerClient:
         )
         self.logger = get_logger(debug=debug)
 
-    def get_cost_and_usage(self, group_by=None):
+    def get_cost_and_usage(self, dimensions=None):
         """
         cost explorerのAPIを実行
         """
         params = dict(
             TimePeriod={"Start": self.start, "End": self.end},
             Granularity=self.granularity,
-            Metrics=[self.metrics,],
+            Metrics=[self.metrics],
         )
-        group_by = self._get_group_by(group_by)
+        group_by = self._get_group_by(dimensions)
         if group_by is not None:
             params["GroupBy"] = group_by
         if self.filter_dimensions is not None:
@@ -41,10 +41,10 @@ class CostExplorerClient:
         response = self.client.get_cost_and_usage(**params)
         return response.get("ResultsByTime")
 
-    def _get_group_by(self, group_by):
+    def _get_group_by(self, dimensions):
         """
         listからgroup-byの構造に変換
         """
-        if group_by is None:
+        if dimensions is None:
             return None
-        return [{"Type": "DIMENSION", "Key": key} for key in group_by]
+        return [{"Type": "DIMENSION", "Key": key} for key in dimensions]

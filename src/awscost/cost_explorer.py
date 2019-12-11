@@ -10,7 +10,7 @@ class CostExplorer:
         granularity,
         start,
         end,
-        group_by=[],
+        dimensions=[],
         filter_dimensions=None,
         metrics=constants.DEFAULT_METRICS,
         profile=None,
@@ -26,7 +26,7 @@ class CostExplorer:
             debug=debug,
         )
         self.granularity = granularity
-        self.group_by = group_by
+        self.dimensions = dimensions
         self.metrics = metrics
         self.logger = get_logger(debug=debug)
 
@@ -60,7 +60,7 @@ class CostExplorer:
         startとendを指定してcostの時系列データを取得する
         """
         cost_and_usage_per_service = self.cost_explorer_client.get_cost_and_usage(
-            group_by=self.group_by
+            dimensions=self.dimensions
         )
         results = self._convert_results_group_by(cost_and_usage_per_service)
         self.logger.debug(results)
