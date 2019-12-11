@@ -1,9 +1,9 @@
 from tabulate import tabulate
 
 
-class Util:
+class TabulateUtil:
     @staticmethod
-    def convert_tabulate(results, tablefmt="simple"):
+    def convert(results, tablefmt="simple"):
         converts = []
         for k, amounts in results.items():
             converts.append(dict({"key": k}, **amounts))

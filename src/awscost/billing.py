@@ -2,6 +2,7 @@ from .logger import get_logger
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from boto3.session import Session
+from .tabulate_util import TabulateUtil
 
 
 class Billing:
@@ -12,6 +13,12 @@ class Billing:
         self.logger = get_logger(debug)
         response = self.client.list_metrics(Namespace="AWS/Billing")
         self.metrics = response.get("Metrics")
+
+    def to_tabulate(self, data, tablefmt=None):
+        """
+        convert tabulate style.
+        """
+        return TabulateUtil.convert(data, tablefmt=tablefmt)
 
     def get_currencies_per_service(self, scale_range, point):
         """

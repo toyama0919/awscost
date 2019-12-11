@@ -3,7 +3,6 @@ import json
 from datetime import datetime
 from .billing import Billing
 from .cost_explorer import CostExplorer
-from .util import Util
 from .validator import Validator
 from .date_util import DateUtil
 from . import constants
@@ -89,8 +88,8 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, dimensions, filter, m
         debug=ctx.obj.debug,
         profile=ctx.obj.profile,
     )
-    currencies = cost_explorer.get_cost_and_usage_total_and_group_by()
-    print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
+    cost_and_usage = cost_explorer.get_cost_and_usage_total_and_group_by()
+    print(cost_explorer.to_tabulate(cost_and_usage, tablefmt=tablefmt))
 
 
 @cli.command(help="list cloudwatch billing")
@@ -115,7 +114,7 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, dimensions, filter, m
 def list_billing(ctx, range, tablefmt, point):
     billing = Billing(ctx.obj.debug, ctx.obj.profile)
     currencies = billing.get_currencies_per_service(range, point)
-    print(Util.convert_tabulate(currencies, tablefmt=tablefmt))
+    print(billing.to_tabulate(currencies, tablefmt=tablefmt))
 
 
 def main():

@@ -1,6 +1,7 @@
 from datetime import datetime
 from .logger import get_logger
 from .cost_explorer_client import CostExplorerClient
+from .tabulate_util import TabulateUtil
 from . import constants
 
 
@@ -29,6 +30,12 @@ class CostExplorer:
         self.dimensions = dimensions
         self.metrics = metrics
         self.logger = get_logger(debug=debug)
+
+    def to_tabulate(self, data, tablefmt=None):
+        """
+        convert tabulate style.
+        """
+        return TabulateUtil.convert(data, tablefmt=tablefmt)
 
     def get_cost_and_usage_total_and_group_by(self):
         """
