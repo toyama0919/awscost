@@ -49,7 +49,7 @@ Amazon Simple Queue Service                                                     
 show cost latest 3 days, group by SERVICE and operation.
 
 ```bash
-$ awscost list-ce -g DAILY -p 3 --group-by SERVICE --group-by OPERATION
+$ awscost list-ce -g DAILY -p 3 -d SERVICE -d OPERATION
 key                                                             2019-12-01    2019-12-02    2019-12-03
 ------------------------------------------------------------  ------------  ------------  ------------
 Total                                                                 2.87          2.1           2.87
