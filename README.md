@@ -65,11 +65,69 @@ NoOperation,Tax                                                       0.25
 ...
 ```
 
-## Installation
+### support dimensions
 
-```sh
-pip install awscost
+* AZ
+* INSTANCE_TYPE
+* LINKED_ACCOUNT
+* OPERATION
+* PURCHASE_TYPE
+* SERVICE
+* USAGE_TYPE
+* PLATFORM
+* TENANCY
+* RECORD_TYPE
+* LEGAL_ENTITY_NAME
+* DEPLOYMENT_OPTION
+* DATABASE_ENGINE
+* CACHE_ENGINE
+* INSTANCE_TYPE_FAMILY
+* REGION
+* BILLING_ENTITY
+* RESERVATION_ID
+* SAVINGS_PLANS_TYPE
+* SAVINGS_PLAN_ARN
+* OPERATING_SYSTEM
+
+see. https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
+
+## Various format(-t option)
+
+example, use -t tsv.
+
+default is simple.
+
 ```
+$ awscost list-ce --group-by SERVICE --group-by OPERATION -t tsv
+key                                                             01-24   01-25   01-26   01-27   01-28   01-29   01-30   01-31   02-01   02-02
+Total                                                            2       2       2       2       2.02    2.01    2.01    2.01    2.5     1.67
+EC2 - Other,NatGateway                                           1.08    1.08    1.08    1.08    1.08    1.08    1.08    1.08    1.08    0.9
+Amazon Elastic Compute Cloud - Compute,RunInstances              0.55    0.55    0.55    0.55    0.55    0.55    0.55    0.55    0.55    0.46
+...
+```
+
+### support format
+- simple(default)
+- plain
+- github
+- grid
+- fancy_grid
+- pipe
+- orgtbl
+- jira
+- presto
+- psql
+- rst
+- mediawiki
+- moinmoin
+- youtrack
+- html
+- latex
+- latex_raw
+- latex_booktabs
+- textile
+- tsv
+
 
 ## Contributing
 
