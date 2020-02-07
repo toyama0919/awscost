@@ -128,6 +128,28 @@ Amazon Elastic Compute Cloud - Compute,RunInstances              0.55    0.55   
 - textile
 - tsv
 
+## Python API
+
+```
+from awscost.cost_explorer import CostExplorer
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
+
+start = (datetime.today() - relativedelta(months=3)).strftime("%Y-%m-01")
+end = datetime.today().strftime("%Y-%m-01")
+
+cost_explorer = CostExplorer(
+    "MONTHLY", start, end, dimensions=["SERVICE"], metrics="UnblendedCost"
+).get_cost_and_usage_total_and_group_by()
+
+# return dict data. 
+cost_explorer # =>
+# {   'AWS CloudTrail': {'2019-11': 4.44, '2019-12': 6.17, '2020-01': 4.38},
+#     'AWS Lambda': {'2019-11': 0.0, '2019-12': 0.0, '2020-01': 0.0},
+# ...
+#     'Total': {'2019-11': 67.15, '2019-12': 72.22, '2020-01': 68.11}}
+
+```
 
 ## Contributing
 
