@@ -1,4 +1,5 @@
 from datetime import datetime
+from collections import OrderedDict
 from .logger import get_logger
 from .cost_explorer_client import CostExplorerClient
 from .tabulate_util import TabulateUtil
@@ -48,7 +49,7 @@ class CostExplorer:
         results = self.get_cost_and_usage_group_by()
 
         # totalとgroup byをmergeする
-        merged = dict(total, **results)
+        merged = OrderedDict(total, **results)
         self.logger.debug(merged)
         return merged
 
@@ -77,7 +78,7 @@ class CostExplorer:
         """
         group-byが指定されているデータ構造のparse
         """
-        results = {}
+        results = OrderedDict()
         for result in cost_and_usage_per_service:
             start_period = result.get("TimePeriod").get("Start")
             time_key = self._convert_period(start_period)
@@ -97,7 +98,7 @@ class CostExplorer:
         """
         Totalのデータ構造のparse
         """
-        results = {"Total": {}}
+        results = OrderedDict([("Total", {})])
         for result in cost_and_usage_per_service:
             start_period = result.get("TimePeriod").get("Start")
             time_key = self._convert_period(start_period)
