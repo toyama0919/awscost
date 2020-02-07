@@ -97,7 +97,7 @@ example, use -t tsv.
 
 default is simple.
 
-```
+```bash
 $ awscost list-ce --group-by SERVICE --group-by OPERATION -t tsv
 key                                                             01-24   01-25   01-26   01-27   01-28   01-29   01-30   01-31   02-01   02-02
 Total                                                            2       2       2       2       2.02    2.01    2.01    2.01    2.5     1.67
@@ -130,7 +130,7 @@ Amazon Elastic Compute Cloud - Compute,RunInstances              0.55    0.55   
 
 ## Python API
 
-```
+```py
 from awscost.cost_explorer import CostExplorer
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
@@ -148,6 +148,27 @@ cost_explorer # =>
 #     'AWS Lambda': {'2019-11': 0.0, '2019-12': 0.0, '2020-01': 0.0},
 # ...
 #     'Total': {'2019-11': 67.15, '2019-12': 72.22, '2020-01': 68.11}}
+
+```
+
+### matplotlib
+
+```py
+...
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(25, 15), dpi=100)
+plt.xlabel('month', fontsize=16)
+plt.ylabel('$', fontsize=16)
+plt.grid(True)
+for i, (service_name, v) in enumerate(cost_explorer.items()):
+    left = list(v.keys())
+    height = list(v.values())
+    plt.plot(left, height, linewidth=2, label=service_name, marker='o')
+plt.legend(loc='best', fontsize=15, numpoints=5)
+
+plt.show()
 
 ```
 
