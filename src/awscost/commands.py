@@ -76,8 +76,22 @@ def cli(ctx, debug, profile):
     default=constants.DEFAULT_METRICS,
     help="metrics. (default: UnblendedCost)",
 )
+@click.option(
+    "--total/--no-total", default=True, help="include total cost. (default: True)"
+)
 @click.pass_context
-def list_ce(ctx, granularity, point, start, end, tablefmt, dimensions, filter, metrics):
+def list_ce(
+        ctx,
+        granularity,
+        point,
+        start,
+        end,
+        tablefmt,
+        dimensions,
+        filter,
+        metrics,
+        total
+    ):
     cost_explorer = CostExplorer(
         granularity,
         start or DateUtil.get_start(granularity, point),
@@ -87,6 +101,7 @@ def list_ce(ctx, granularity, point, start, end, tablefmt, dimensions, filter, m
         metrics=metrics,
         debug=ctx.obj.debug,
         profile=ctx.obj.profile,
+        total=total,
     )
     cost_and_usage = cost_explorer.get_cost_and_usage_total_and_group_by()
     print(cost_explorer.to_tabulate(cost_and_usage, tablefmt=tablefmt))

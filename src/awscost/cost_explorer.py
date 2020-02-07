@@ -21,6 +21,7 @@ class CostExplorer:
         metrics=constants.DEFAULT_METRICS,
         profile=None,
         debug=False,
+        total=True,
     ):
         self.cost_explorer_client = CostExplorerClient(
             granularity,
@@ -34,6 +35,7 @@ class CostExplorer:
         self.granularity = granularity
         self.dimensions = dimensions
         self.metrics = metrics
+        self.total = total
         self.logger = get_logger(debug=debug)
 
     def to_tabulate(self, data, tablefmt=None):
@@ -54,9 +56,10 @@ class CostExplorer:
 
         # totalと0埋めしたgroup byをmergeする
         group_by_results_pad_zero = self.pad_zero(total, group_by_results)
-        merged = OrderedDict(total, **group_by_results_pad_zero)
-        self.logger.debug(merged)
-        return merged
+        if self.total:
+            merged = OrderedDict(total, **group_by_results_pad_zero)
+            return merged
+        return group_by_results_pad_zero
 
     def pad_zero(self, total, group_by_results):
         """
