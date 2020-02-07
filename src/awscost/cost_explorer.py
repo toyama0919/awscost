@@ -7,6 +7,10 @@ from . import constants
 
 
 class CostExplorer:
+    """
+    convert responce data class.
+    """
+
     def __init__(
         self,
         granularity,
@@ -45,13 +49,29 @@ class CostExplorer:
         # totalを取得
         total = self.get_cost_and_usage_total()
 
-        # group別を取得
-        results = self.get_cost_and_usage_group_by()
+        # group byしたデータを取得
+        group_by_results = self.get_cost_and_usage_group_by()
 
-        # totalとgroup byをmergeする
-        merged = OrderedDict(total, **results)
+        # totalと0埋めしたgroup byをmergeする
+        group_by_results_pad_zero = self.pad_zero(total, group_by_results)
+        merged = OrderedDict(total, **group_by_results_pad_zero)
         self.logger.debug(merged)
         return merged
+
+    def pad_zero(self, total, group_by_results):
+        """
+        値を0埋めする
+        """
+        # 0埋めするためのdictを作成
+        pad_zero = OrderedDict()
+        for k, v in total.get("Total").items():
+            pad_zero[k] = 0
+
+        group_by_results_pad_zero = OrderedDict()
+        for k, v in group_by_results.items():
+            merged = OrderedDict(pad_zero, **v)
+            group_by_results_pad_zero[k] = merged
+        return group_by_results_pad_zero
 
     def get_cost_and_usage_total(self):
         """
@@ -86,7 +106,7 @@ class CostExplorer:
             for group in groups:
                 group_by_key = ",".join(group.get("Keys"))
                 if results.get(group_by_key) is None:
-                    results[group_by_key] = {}
+                    results[group_by_key] = OrderedDict()
                 else:
                     results[group_by_key] = results.get(group_by_key)
                 metrics = group.get("Metrics")
@@ -98,7 +118,7 @@ class CostExplorer:
         """
         Totalのデータ構造のparse
         """
-        results = OrderedDict([("Total", {})])
+        results = OrderedDict([("Total", OrderedDict())])
         for result in cost_and_usage_per_service:
             start_period = result.get("TimePeriod").get("Start")
             time_key = self._convert_period(start_period)
