@@ -38,10 +38,11 @@ class CostExplorer:
         self.total = total
         self.logger = get_logger(debug=debug)
 
-    def to_tabulate(self, data, tablefmt=None):
+    def to_tabulate(self, tablefmt=None):
         """
         convert tabulate style.
         """
+        data = self.get_cost_and_usage_total_and_group_by()
         return TabulateUtil.convert(data, tablefmt=tablefmt)
 
     def get_cost_and_usage_total_and_group_by(self):

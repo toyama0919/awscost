@@ -103,8 +103,7 @@ def list_ce(
         profile=ctx.obj.profile,
         total=total,
     )
-    cost_and_usage = cost_explorer.get_cost_and_usage_total_and_group_by()
-    print(cost_explorer.to_tabulate(cost_and_usage, tablefmt=tablefmt))
+    print(cost_explorer.to_tabulate(tablefmt=tablefmt))
 
 
 @cli.command(help="list cloudwatch billing")
