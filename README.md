@@ -7,14 +7,6 @@ Command Line utility for Provides aws cost very easy to see.
 
 Supports python 3.6 or later.
 
-## Settings
-
-aws auth support following.
-
-* environment
-* profile(use --profile option.)
-* instance profile
-
 ## Examples
 
 ### show cost
@@ -125,6 +117,16 @@ Amazon Elastic Compute Cloud - Compute,RunInstances              0.55    0.55   
 - latex_booktabs
 - textile
 - tsv
+
+## Settings
+
+aws auth support following.
+
+* environment
+* profile(use --profile option.)
+* instance profile
+
+
 
 ## Python API
 
