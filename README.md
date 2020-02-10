@@ -172,6 +172,15 @@ plt.show()
 
 ```
 
+## release pypi.
+
+```
+$ python setup.py sdist bdist_wheel
+$ twine upload --verbose dist/awscost-$(python setup.py --version).tar.gz
+```
+
+require wheel, twine.
+
 ## Contributing
 
 1. Fork it

@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 import os
 
 here = os.path.abspath(os.path.dirname(__file__))
-print(open(os.path.join(here, "README.md")).read())
 version = "0.2.0"
 
 install_requires = ["tabulate", "boto3", "click>=7.0"]
