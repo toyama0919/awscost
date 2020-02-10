@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/awscost.svg)](https://badge.fury.io/py/awscost)
 [![Build Status](https://secure.travis-ci.org/toyama0919/awscost.png?branch=master)](http://travis-ci.org/toyama0919/awscost)
 
-Command Line utility for cost of aws.
+Command Line utility for Provides aws cost very easy to see.
 
 Supports python 3.6 or later.
 
@@ -17,14 +17,12 @@ aws auth support following.
 
 ## Examples
 
-### list-ce
-
 ### show cost
 
 show cost latest 5 months.
 
 ```bash
-$ awscost list-ce -g MONTHLY -p 5
+$ awscost -g MONTHLY -p 5
 key                                       2019-07    2019-08    2019-09    2019-10    2019-11    2019-12
 --------------------------------------  ---------  ---------  ---------  ---------  ---------  ---------
 Total                                      348.34      97.4       98.46     106.47      67.25       7.84
@@ -49,7 +47,7 @@ Amazon Simple Queue Service                                                     
 show cost latest 3 days, group by SERVICE and operation.
 
 ```bash
-$ awscost list-ce -g DAILY -p 3 -d SERVICE -d OPERATION
+$ awscost -g DAILY -p 3 -d SERVICE -d OPERATION
 key                                                             2019-12-01    2019-12-02    2019-12-03
 ------------------------------------------------------------  ------------  ------------  ------------
 Total                                                                 2.87          2.1           2.87
@@ -98,7 +96,7 @@ example, use -t tsv.
 default is simple.
 
 ```bash
-$ awscost list-ce --group-by SERVICE --group-by OPERATION -t tsv
+$ awscost -d SERVICE -d OPERATION -t tsv
 key                                                             01-24   01-25   01-26   01-27   01-28   01-29   01-30   01-31   02-01   02-02
 Total                                                            2       2       2       2       2.02    2.01    2.01    2.01    2.5     1.67
 EC2 - Other,NatGateway                                           1.08    1.08    1.08    1.08    1.08    1.08    1.08    1.08    1.08    0.9
