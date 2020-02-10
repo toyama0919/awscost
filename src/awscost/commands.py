@@ -1,30 +1,17 @@
 import click
 import json
 from datetime import datetime
-from .billing import Billing
 from .cost_explorer import CostExplorer
 from .validator import Validator
 from .date_util import DateUtil
 from . import constants
 
 
-class Mash(object):
-    pass
-
-
-@click.group(invoke_without_command=True)
+@click.command()
 @click.option(
     "--debug/--no-debug", default=False, help="enable debug logging. (default: False)"
 )
 @click.option("--profile", type=str, help="aws profile name.")
-@click.pass_context
-def cli(ctx, debug, profile):
-    ctx.obj = Mash()
-    ctx.obj.debug = debug
-    ctx.obj.profile = profile
-
-
-@cli.command(help="list cost explorer")
 @click.option(
     "--granularity",
     "-g",
@@ -80,18 +67,9 @@ def cli(ctx, debug, profile):
     "--total/--no-total", default=True, help="include total cost. (default: True)"
 )
 @click.pass_context
-def list_ce(
-        ctx,
-        granularity,
-        point,
-        start,
-        end,
-        tablefmt,
-        dimensions,
-        filter,
-        metrics,
-        total
-    ):
+def cli(
+    ctx, debug, profile, granularity, point, start, end, tablefmt, dimensions, filter, metrics, total
+):
     cost_explorer = CostExplorer(
         granularity,
         start or DateUtil.get_start(granularity, point),
@@ -99,37 +77,12 @@ def list_ce(
         dimensions=dimensions,
         filter_dimensions=filter,
         metrics=metrics,
-        debug=ctx.obj.debug,
-        profile=ctx.obj.profile,
+        debug=debug,
+        profile=profile,
         total=total,
     )
     print(cost_explorer.to_tabulate(tablefmt=tablefmt))
 
 
-@cli.command(help="list cloudwatch billing")
-@click.option(
-    "--range", "-r", type=click.Choice(["month", "week", "day"]), required=True
-)
-@click.option(
-    "--tablefmt",
-    "-t",
-    type=str,
-    default="simple",
-    help="tabulate format. (default: simple)",
-)
-@click.option(
-    "--point",
-    "-p",
-    type=int,
-    default=constants.DEFAULT_POINT,
-    help=f"number of data point. (default: {constants.DEFAULT_POINT})",
-)
-@click.pass_context
-def list_billing(ctx, range, tablefmt, point):
-    billing = Billing(ctx.obj.debug, ctx.obj.profile)
-    currencies = billing.get_currencies_per_service(range, point)
-    print(billing.to_tabulate(currencies, tablefmt=tablefmt))
-
-
 def main():
-    cli(obj={})
+    cli()
