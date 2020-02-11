@@ -4,7 +4,19 @@ import os
 here = os.path.abspath(os.path.dirname(__file__))
 version = "0.2.0"
 
-install_requires = ["tabulate", "boto3", "click>=7.0"]
+install_requires = [
+    "tabulate",
+    "boto3",
+    "click>=7.0"
+]
+
+setup_requires = [
+    'pytest-runner',
+]
+
+tests_require = [
+    'pytest',
+]
 
 setup(
     name="awscost",
@@ -27,5 +39,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
+    setup_requires=setup_requires,
+    tests_require=tests_require,
     entry_points={"console_scripts": ["awscost=awscost.commands:main"]},
 )
