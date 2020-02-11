@@ -4,18 +4,14 @@ import os
 here = os.path.abspath(os.path.dirname(__file__))
 version = "0.2.0"
 
-install_requires = [
-    "tabulate",
-    "boto3",
-    "click>=7.0"
-]
+install_requires = ["tabulate", "boto3", "click>=7.0"]
 
 setup_requires = [
-    'pytest-runner',
+    "pytest-runner",
 ]
 
 tests_require = [
-    'pytest',
+    "pytest",
 ]
 
 setup(
