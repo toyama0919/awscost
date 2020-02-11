@@ -6,13 +6,7 @@ version = "0.2.0"
 
 install_requires = ["tabulate", "boto3", "click>=7.0"]
 
-setup_requires = [
-    "pytest-runner",
-]
-
-tests_require = [
-    "pytest",
-]
+extras_require = {"test": ["tox", "twine", "wheel"]}
 
 setup(
     name="awscost",
@@ -36,7 +30,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
-    setup_requires=setup_requires,
-    tests_require=tests_require,
+    extras_require=extras_require,
+    tests_require=extras_require["test"],
     entry_points={"console_scripts": ["awscost=awscost.commands:main"]},
 )

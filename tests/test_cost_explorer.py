@@ -9,10 +9,10 @@ class TestCostExplorer(object):
         pass
 
     def test_pad_zero(self):
-        total = {"Total": {"2020-01": 1.5, "2020-02": 1.5, "2020-03": 1.5,}}
+        total = {"Total": {"2020-01": 1.5, "2020-02": 1.5, "2020-03": 1.5}}
         group_by_results = {
-            "EC2 - Other": {"2020-02": 1.5,},
-            "Amazon Simple Storage Service": {"2020-01": 2.5,},
+            "EC2 - Other": {"2020-02": 1.5},
+            "Amazon Simple Storage Service": {"2020-01": 2.5},
         }
         group_by_results_pad_zero = CostExplorer.pad_zero(total, group_by_results)
 
