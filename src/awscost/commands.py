@@ -1,5 +1,7 @@
 import click
+import sys
 import json
+import awscost
 from datetime import datetime
 from .cost_explorer import CostExplorer
 from .validator import Validator
@@ -10,6 +12,9 @@ from . import constants
 @click.command()
 @click.option(
     "--debug/--no-debug", default=False, help="enable debug logging. (default: False)"
+)
+@click.option(
+    "--version/--no-version", "-v", default=False, help="show version. (default: False)"
 )
 @click.option("--profile", type=str, help="aws profile name.")
 @click.option(
@@ -70,6 +75,7 @@ from . import constants
 def cli(
     ctx,
     debug,
+    version,
     profile,
     granularity,
     point,
@@ -81,6 +87,10 @@ def cli(
     metrics,
     total,
 ):
+    if version:
+        print(awscost.VERSION)
+        sys.exit()
+
     cost_explorer = CostExplorer(
         granularity,
         start or DateUtil.get_start(granularity, point),

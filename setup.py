@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 import os
 
 here = os.path.abspath(os.path.dirname(__file__))
-version = "0.2.0"
 
 install_requires = ["tabulate", "boto3", "click>=7.0"]
 
@@ -11,7 +10,7 @@ extras_require = {"test": ["tox", "twine", "wheel"]}
 setup(
     name="awscost",
     scripts=["bin/awscost"],
-    version=version,
+    version=open("VERSION").read().strip(),
     description="Command Line utility for cost of aws.",
     long_description=open(os.path.join(here, "README.md")).read(),
     long_description_content_type="text/markdown",
