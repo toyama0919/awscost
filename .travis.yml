@@ -3,8 +3,9 @@ language: python
 python:
   - "3.6"
   - "3.7"
+  - "3.8"
 
 install:
-  - pip install .
+  - ./scripts/install-ci.sh
 
-script: python setup.py test
+script: ./scripts/run-ci.sh

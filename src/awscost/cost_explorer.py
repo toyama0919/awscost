@@ -1,8 +1,8 @@
+from tabulate import tabulate
 from datetime import datetime
 from collections import OrderedDict
 from .logger import get_logger
 from .cost_explorer_client import CostExplorerClient
-from .tabulate_util import TabulateUtil
 from . import constants
 
 
@@ -43,7 +43,16 @@ class CostExplorer:
         convert tabulate style.
         """
         data = self.get_cost_and_usage_total_and_group_by()
-        return TabulateUtil.convert(data, tablefmt=tablefmt)
+        converts = []
+        for k, amounts in data.items():
+            converts.append(dict({"key": k}, **amounts))
+        last_time = list(converts[0].keys())[-1]
+        converts = sorted(
+            converts,
+            key=lambda x: 0 if x.get(last_time) is None else x.get(last_time),
+            reverse=True,
+        )
+        return tabulate(converts, headers="keys", tablefmt=tablefmt)
 
     def get_cost_and_usage_total_and_group_by(self):
         """
@@ -56,25 +65,10 @@ class CostExplorer:
         group_by_results = self.get_cost_and_usage_group_by()
 
         # totalと0埋めしたgroup byをmergeする
-        group_by_results_pad_zero = self.pad_zero(total, group_by_results)
+        group_by_results_pad_zero = self.__class__.pad_zero(total, group_by_results)
         if self.total:
             merged = OrderedDict(total, **group_by_results_pad_zero)
             return merged
-        return group_by_results_pad_zero
-
-    def pad_zero(self, total, group_by_results):
-        """
-        値を0埋めする
-        """
-        # 0埋めするためのdictを作成
-        pad_zero = OrderedDict()
-        for k, v in total.get("Total").items():
-            pad_zero[k] = 0
-
-        group_by_results_pad_zero = OrderedDict()
-        for k, v in group_by_results.items():
-            merged = OrderedDict(pad_zero, **v)
-            group_by_results_pad_zero[k] = merged
         return group_by_results_pad_zero
 
     def get_cost_and_usage_total(self):
@@ -84,7 +78,6 @@ class CostExplorer:
         # totalを取得
         cost_and_usage = self.cost_explorer_client.get_cost_and_usage()
         total = self._convert_results_total(cost_and_usage)
-        self.logger.debug(total)
         return total
 
     def get_cost_and_usage_group_by(self):
@@ -95,7 +88,6 @@ class CostExplorer:
             dimensions=self.dimensions
         )
         results = self._convert_results_group_by(cost_and_usage_per_service)
-        self.logger.debug(results)
         return results
 
     def _convert_results_group_by(self, cost_and_usage_per_service):
@@ -138,3 +130,19 @@ class CostExplorer:
         if self.granularity == "MONTHLY":
             return datetime.strptime(start_period, "%Y-%m-%d").strftime("%Y-%m")
         return datetime.strptime(start_period, "%Y-%m-%d").strftime("%m-%d")
+
+    @staticmethod
+    def pad_zero(total, group_by_results):
+        """
+        値を0埋めする
+        """
+        # 0埋めするためのdictを作成
+        pad_zero = OrderedDict()
+        for k, v in total.get("Total").items():
+            pad_zero[k] = 0
+
+        group_by_results_pad_zero = OrderedDict()
+        for k, v in group_by_results.items():
+            merged = OrderedDict(pad_zero, **v)
+            group_by_results_pad_zero[k] = merged
+        return group_by_results_pad_zero

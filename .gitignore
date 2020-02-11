@@ -1,5 +1,7 @@
 *.pyc
 
+.eggs
+.tox
 .mypy_cache
 .installed.cfg
 develop-eggs

@@ -6,6 +6,8 @@ version = "0.2.0"
 
 install_requires = ["tabulate", "boto3", "click>=7.0"]
 
+extras_require = {"test": ["tox", "twine", "wheel"]}
+
 setup(
     name="awscost",
     scripts=["bin/awscost"],
@@ -16,6 +18,7 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     keywords="awscost tool aws",
     author="Hiroshi Toyama",
@@ -27,5 +30,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
+    extras_require=extras_require,
+    tests_require=extras_require["test"],
     entry_points={"console_scripts": ["awscost=awscost.commands:main"]},
 )

@@ -68,7 +68,18 @@ from . import constants
 )
 @click.pass_context
 def cli(
-    ctx, debug, profile, granularity, point, start, end, tablefmt, dimensions, filter, metrics, total
+    ctx,
+    debug,
+    profile,
+    granularity,
+    point,
+    start,
+    end,
+    tablefmt,
+    dimensions,
+    filter,
+    metrics,
+    total,
 ):
     cost_explorer = CostExplorer(
         granularity,
