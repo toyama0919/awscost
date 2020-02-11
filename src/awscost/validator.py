@@ -10,6 +10,6 @@ class Validator:
 
         try:
             datetime.strptime(value, "%Y-%m-%d")
-        except:
+        except ValueError:
             raise click.BadParameter(f"please input dateformat parameter. ('%Y-%m-%d')")
         return value
