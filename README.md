@@ -190,11 +190,26 @@ plt.show()
 }
 ```
 
-## release pypi.
+## CI
+
+### install test package
 
 ```
-$ python setup.py sdist bdist_wheel
-$ twine upload --verbose dist/awscost-$(python setup.py --version).tar.gz
+$ ./scripts/install-ci.sh
 ```
 
-require wheel, twine.
+### test
+
+```
+$ ./scripts/run-ci.sh
+```
+
+flake8 and black and pytest.
+
+### release pypi
+
+```
+$ ./scripts/release-ci.sh
+```
+
+git tag and pypi release.
