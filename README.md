@@ -190,11 +190,26 @@ plt.show()
 }
 ```
 
-## release pypi.
+## CI
+
+### install test package
 
 ```
 $ ./scripts/install-ci.sh
+```
+
+### test
+
+```
 $ ./scripts/run-ci.sh
+```
+
+flake8 and black and pytest.
+
+### release pypi
+
+```
+$ ./scripts/release-ci.sh
 ```
 
 git tag and pypi release.
