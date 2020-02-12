@@ -193,8 +193,8 @@ plt.show()
 ## release pypi.
 
 ```
-$ python setup.py sdist bdist_wheel
-$ twine upload --verbose dist/awscost-$(python setup.py --version).tar.gz
+$ ./scripts/install-ci.sh
+$ ./scripts/run-ci.sh
 ```
 
-require wheel, twine.
+git tag and pypi release.
