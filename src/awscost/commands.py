@@ -88,7 +88,7 @@ def cli(
     total,
 ):
     if version:
-        print(awscost.VERSION)
+        click.echo(awscost.VERSION)
         sys.exit()
 
     cost_explorer = CostExplorer(
@@ -102,7 +102,7 @@ def cli(
         profile=profile,
         total=total,
     )
-    print(cost_explorer.to_tabulate(tablefmt=tablefmt))
+    click.echo(cost_explorer.to_tabulate(tablefmt=tablefmt))
 
 
 def main():
