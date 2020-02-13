@@ -94,6 +94,34 @@ awscost --filter '{
 }'
 ```
 
+## config file($HOME/.awscost)
+
+```
+default:
+  metrics: AmortizedCost
+  filter:
+    Dimensions:
+      Key: RECORD_TYPE
+      Values:
+        - Usage
+        - Tax
+
+discount:
+  filter:
+    Dimensions:
+      Key: RECORD_TYPE
+      Values:
+        - Credit
+        - Refund
+        - Upfront
+```
+
+You can exec command as below.
+
+```
+$ awscost --profile discount
+```
+
 ## Various format(-t option)
 
 example, use -t tsv.
