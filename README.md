@@ -163,8 +163,8 @@ Amazon Elastic Compute Cloud - Compute,RunInstances              0.55    0.55   
 
 aws auth support following.
 
-* environment
-* profile(use --profile option.)
+* environment variables
+* profile(use --aws-profile option.)
 * instance profile
 
 
