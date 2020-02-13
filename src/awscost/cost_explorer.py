@@ -30,7 +30,7 @@ class CostExplorer:
         total=None,
     ):
         # read profile
-        profile = self.read_profile(config, profile)
+        profile = self._read_profile(config, profile)
 
         self.granularity = (
             granularity or profile.get("granularity") or constants.DEFAULT_GRANULARITY
@@ -60,15 +60,6 @@ class CostExplorer:
             aws_profile=aws_profile,
             debug=debug,
         )
-
-    def read_profile(self, config, profile_name):
-        config = config or constants.DEFAULT_CONFIG
-        profile_name = profile_name or constants.DEFAULT_PROFILE
-        if config and os.path.exists(config):
-            profile = yaml.load(open(config, encoding="UTF-8").read()).get(profile_name)
-        else:
-            profile = {}
-        return profile
 
     def to_tabulate(self, tablefmt=None):
         """
@@ -162,6 +153,15 @@ class CostExplorer:
         if self.granularity == "MONTHLY":
             return datetime.strptime(start_period, "%Y-%m-%d").strftime("%Y-%m")
         return datetime.strptime(start_period, "%Y-%m-%d").strftime("%m-%d")
+
+    def _read_profile(self, config, profile_name):
+        config = config or constants.DEFAULT_CONFIG
+        profile_name = profile_name or constants.DEFAULT_PROFILE
+        if config and os.path.exists(config):
+            profile = yaml.load(open(config, encoding="UTF-8").read()).get(profile_name)
+        else:
+            profile = {}
+        return profile
 
     @staticmethod
     def pad_zero(total, group_by_results):
