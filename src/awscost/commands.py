@@ -5,17 +5,18 @@ import awscost
 from datetime import datetime
 from .cost_explorer import CostExplorer
 from .validator import Validator
-from .date_util import DateUtil
 from . import constants
 
 
 @click.command()
 @click.option(
-    "--debug/--no-debug", default=False, help="enable debug logging. (default: False)"
+    "--debug/--no-debug", default=None, help="enable debug logging. (default: False)"
 )
 @click.option(
     "--version/--no-version", "-v", default=False, help="show version. (default: False)"
 )
+@click.option("--config", '-c', type=str, help="config file.")
+@click.option("--profile", type=str, help="aws profile name.")
 @click.option("--aws-profile", type=str, help="aws profile name.")
 @click.option(
     "--granularity",
@@ -28,7 +29,6 @@ from . import constants
     "--point",
     "-p",
     type=int,
-    default=constants.DEFAULT_POINT,
     help=f"duration. if granularity is MONTHLY, {constants.DEFAULT_POINT} month ago start. if granularity is DAILY, {constants.DEFAULT_POINT} day ago start. (default: {constants.DEFAULT_POINT})",
 )
 @click.option(
@@ -41,7 +41,6 @@ from . import constants
     "--end",
     callback=Validator.validate_dateformat,
     type=str,
-    default=datetime.today().strftime("%Y-%m-%d"),
     help="range of end day. default is now.",
 )
 @click.option(
@@ -56,7 +55,6 @@ from . import constants
     "-d",
     type=click.Choice(constants.AVAILABLE_DIMENSIONS),
     multiple=True,
-    default=["SERVICE"],
     help='group by dimensions. (default: ["SERVICE"])',
 )
 @click.option(
@@ -76,6 +74,8 @@ def cli(
     ctx,
     debug,
     version,
+    config,
+    profile,
     aws_profile,
     granularity,
     point,
@@ -92,9 +92,12 @@ def cli(
         sys.exit()
 
     cost_explorer = CostExplorer(
-        granularity,
-        start or DateUtil.get_start(granularity, point),
-        end,
+        granularity=granularity,
+        point=point,
+        start=start,
+        end=end,
+        config=config,
+        profile=profile,
         dimensions=dimensions,
         filter=filter,
         metrics=metrics,
