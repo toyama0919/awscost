@@ -16,7 +16,7 @@ from . import constants
 @click.option(
     "--version/--no-version", "-v", default=False, help="show version. (default: False)"
 )
-@click.option("--profile", type=str, help="aws profile name.")
+@click.option("--aws-profile", type=str, help="aws profile name.")
 @click.option(
     "--granularity",
     "-g",
@@ -76,7 +76,7 @@ def cli(
     ctx,
     debug,
     version,
-    profile,
+    aws_profile,
     granularity,
     point,
     start,
@@ -99,7 +99,7 @@ def cli(
         filter=filter,
         metrics=metrics,
         debug=debug,
-        profile=profile,
+        aws_profile=aws_profile,
         total=total,
     )
     click.echo(cost_explorer.to_tabulate(tablefmt=tablefmt))

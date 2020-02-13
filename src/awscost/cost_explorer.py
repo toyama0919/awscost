@@ -19,7 +19,7 @@ class CostExplorer:
         dimensions=[],
         filter=None,
         metrics=constants.DEFAULT_METRICS,
-        profile=None,
+        aws_profile=None,
         debug=False,
         total=True,
     ):
@@ -29,7 +29,7 @@ class CostExplorer:
             end,
             filter=filter,
             metrics=metrics,
-            profile=profile,
+            aws_profile=aws_profile,
             debug=debug,
         )
         self.granularity = granularity
