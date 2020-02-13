@@ -8,7 +8,7 @@ class CostExplorerClient:
         granularity,
         start,
         end,
-        filter_dimensions=None,
+        filter=None,
         metrics=None,
         profile=None,
         debug=False,
@@ -16,7 +16,7 @@ class CostExplorerClient:
         self.granularity = granularity
         self.start = start
         self.end = end
-        self.filter_dimensions = filter_dimensions
+        self.filter = filter
         self.metrics = metrics
         self.client = Session(profile_name=profile).client(
             "ce", region_name="us-east-1"
@@ -35,8 +35,8 @@ class CostExplorerClient:
         group_by = self._get_group_by(dimensions)
         if group_by is not None:
             params["GroupBy"] = group_by
-        if self.filter_dimensions is not None:
-            params["Filter"] = {"Dimensions": self.filter_dimensions}
+        if self.filter is not None:
+            params["Filter"] = self.filter
         self.logger.debug(params)
         response = self.client.get_cost_and_usage(**params)
         return response.get("ResultsByTime")
