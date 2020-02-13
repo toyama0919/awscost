@@ -16,7 +16,7 @@ def read_version():
     raise RuntimeError("Unable to find version string.")
 
 
-install_requires = ["tabulate", "boto3", "click>=7.0"]
+install_requires = ["tabulate", "boto3", "click>=7.0", "pyyaml"]
 extras_require = {"test": ["tox", "twine", "wheel"]}
 
 setup(
