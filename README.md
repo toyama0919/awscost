@@ -81,6 +81,19 @@ NoOperation,Tax                                                       0.25
 
 see. https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
 
+### support filter
+
+```
+awscost --filter '{
+  "Not": {
+    "Dimensions": {
+      "Key": "RECORD_TYPE",
+      "Values": ["Credit", "Refund", "Upfront"]
+    }
+  }
+}'
+```
+
 ## Various format(-t option)
 
 example, use -t tsv.
