@@ -96,7 +96,7 @@ def cli(
         start or DateUtil.get_start(granularity, point),
         end,
         dimensions=dimensions,
-        filter_dimensions=filter,
+        filter=filter,
         metrics=metrics,
         debug=debug,
         profile=profile,
