@@ -2,7 +2,6 @@ import click
 import sys
 import json
 import awscost
-from datetime import datetime
 from .cost_explorer import CostExplorer
 from .validator import Validator
 from . import constants
