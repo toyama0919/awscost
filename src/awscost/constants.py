@@ -1,3 +1,5 @@
+import os
+
 AVAILABLE_DIMENSIONS = [
     "AZ",
     "INSTANCE_TYPE",
@@ -32,5 +34,13 @@ AVAILABLE_METRICS = [
     "NormalizedUsageAmount",
 ]
 
+# default value
+DEFAULT_CONFIG = f"{os.getenv('HOME')}/.awscost"
+DEFAULT_PROFILE = "default"
+
 DEFAULT_METRICS = "UnblendedCost"
 DEFAULT_POINT = 7
+DEFAULT_GRANULARITY = "MONTH"
+DEFAULT_TOTAL = True
+DEFAULT_DEBUG = False
+DEFAULT_DIMENSIONS = ["SERVICE"]

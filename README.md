@@ -94,6 +94,34 @@ awscost --filter '{
 }'
 ```
 
+## config file($HOME/.awscost)
+
+```
+default:
+  metrics: AmortizedCost
+  filter:
+    Dimensions:
+      Key: RECORD_TYPE
+      Values:
+        - Usage
+        - Tax
+
+discount:
+  filter:
+    Dimensions:
+      Key: RECORD_TYPE
+      Values:
+        - Credit
+        - Refund
+        - Upfront
+```
+
+You can exec command as below.
+
+```
+$ awscost --profile discount
+```
+
 ## Various format(-t option)
 
 example, use -t tsv.
@@ -135,8 +163,8 @@ Amazon Elastic Compute Cloud - Compute,RunInstances              0.55    0.55   
 
 aws auth support following.
 
-* environment
-* profile(use --profile option.)
+* environment variables
+* profile(use --aws-profile option.)
 * instance profile
 
 

@@ -1,9 +1,12 @@
+import yaml
+import os
 from tabulate import tabulate
 from datetime import datetime
 from collections import OrderedDict
 from .logger import get_logger
 from .cost_explorer_client import CostExplorerClient
 from . import constants
+from .date_util import DateUtil
 
 
 class CostExplorer:
@@ -13,30 +16,50 @@ class CostExplorer:
 
     def __init__(
         self,
-        granularity,
-        start,
-        end,
-        dimensions=[],
-        filter=None,
-        metrics=constants.DEFAULT_METRICS,
+        config=None,
         profile=None,
-        debug=False,
-        total=True,
+        granularity=None,
+        point=None,
+        start=None,
+        end=None,
+        dimensions=None,
+        filter=None,
+        metrics=None,
+        aws_profile=None,
+        debug=None,
+        total=None,
     ):
+        # read profile
+        profile = self._read_profile(config, profile)
+
+        self.granularity = (
+            granularity or profile.get("granularity") or constants.DEFAULT_GRANULARITY
+        )
+        self.dimensions = (
+            dimensions or profile.get("dimensions") or constants.DEFAULT_DIMENSIONS
+        )
+        self.metrics = metrics or profile.get("metrics") or constants.DEFAULT_METRICS
+        self.total = total or profile.get("total") or constants.DEFAULT_TOTAL
+        debug = debug or profile.get("debug") or constants.DEFAULT_DEBUG
+        self.logger = get_logger(debug=debug)
+
+        aws_profile = aws_profile or profile.get("aws_profile")
+        filter = filter or profile.get("filter")
+        point = point or profile.get("point") or constants.DEFAULT_POINT
+        start = (
+            start or profile.get("start") or DateUtil.get_start(self.granularity, point)
+        )
+        end = end or profile.get("end") or datetime.today().strftime("%Y-%m-%d")
+
         self.cost_explorer_client = CostExplorerClient(
-            granularity,
+            self.granularity,
             start,
             end,
             filter=filter,
             metrics=metrics,
-            profile=profile,
+            aws_profile=aws_profile,
             debug=debug,
         )
-        self.granularity = granularity
-        self.dimensions = dimensions
-        self.metrics = metrics
-        self.total = total
-        self.logger = get_logger(debug=debug)
 
     def to_tabulate(self, tablefmt=None):
         """
@@ -130,6 +153,17 @@ class CostExplorer:
         if self.granularity == "MONTHLY":
             return datetime.strptime(start_period, "%Y-%m-%d").strftime("%Y-%m")
         return datetime.strptime(start_period, "%Y-%m-%d").strftime("%m-%d")
+
+    def _read_profile(self, config, profile_name):
+        config = config or constants.DEFAULT_CONFIG
+        profile_name = profile_name or constants.DEFAULT_PROFILE
+        if config and os.path.exists(config):
+            profile = yaml.load(open(config, encoding="UTF-8").read()).get(profile_name)
+            if profile is None:
+                profile = {}
+        else:
+            profile = {}
+        return profile
 
     @staticmethod
     def pad_zero(total, group_by_results):

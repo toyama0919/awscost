@@ -10,7 +10,7 @@ class CostExplorerClient:
         end,
         filter=None,
         metrics=None,
-        profile=None,
+        aws_profile=None,
         debug=False,
     ):
         self.granularity = granularity
@@ -18,7 +18,7 @@ class CostExplorerClient:
         self.end = end
         self.filter = filter
         self.metrics = metrics
-        self.client = Session(profile_name=profile).client(
+        self.client = Session(profile_name=aws_profile).client(
             "ce", region_name="us-east-1"
         )
         self.logger = get_logger(debug=debug)
