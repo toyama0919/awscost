@@ -15,7 +15,7 @@ from . import constants
 @click.option(
     "--version/--no-version", "-v", default=False, help="show version. (default: False)"
 )
-@click.option("--config", '-c', type=str, help="config file.")
+@click.option("--config", "-c", type=str, help="config file.")
 @click.option("--profile", type=str, help="aws profile name.")
 @click.option("--aws-profile", type=str, help="aws profile name.")
 @click.option(
