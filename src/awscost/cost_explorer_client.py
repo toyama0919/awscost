@@ -27,6 +27,12 @@ class CostExplorerClient:
         """
         cost explorerのAPIを実行
         """
+        params = self._make_params(dimensions)
+        results = self.client.get_cost_and_usage(**params).get("ResultsByTime")
+        self.logger.debug(results)
+        return results
+
+    def _make_params(self, dimensions):
         params = dict(
             TimePeriod={"Start": self.start, "End": self.end},
             Granularity=self.granularity,
@@ -38,8 +44,7 @@ class CostExplorerClient:
         if self.filter is not None:
             params["Filter"] = self.filter
         self.logger.debug(params)
-        response = self.client.get_cost_and_usage(**params)
-        return response.get("ResultsByTime")
+        return params
 
     def _get_group_by(self, dimensions):
         """
