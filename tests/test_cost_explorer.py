@@ -95,3 +95,44 @@ class TestCostExplorer(object):
                     ("AWS Lambda", OrderedDict([("2020-01", 0.0)])),
                 ]
             )
+
+    def test_get_cost_and_usage_total(self):
+        cost_explorer = CostExplorer()
+        with patch.object(CostExplorerClient, "get_cost_and_usage") as mock_foo:
+            mock_foo.return_value = [
+                {
+                    "TimePeriod": {"Start": "2019-12-01", "End": "2020-01-01"},
+                    "Total": {
+                        "UnblendedCost": {"Amount": "72.2197813571", "Unit": "USD"}
+                    },
+                    "Groups": [],
+                    "Estimated": False,
+                },
+                {
+                    "TimePeriod": {"Start": "2020-01-01", "End": "2020-02-01"},
+                    "Total": {
+                        "UnblendedCost": {"Amount": "68.0906860747", "Unit": "USD"}
+                    },
+                    "Groups": [],
+                    "Estimated": False,
+                },
+                {
+                    "TimePeriod": {"Start": "2020-02-01", "End": "2020-02-14"},
+                    "Total": {
+                        "UnblendedCost": {"Amount": "32.2073391037", "Unit": "USD"}
+                    },
+                    "Groups": [],
+                    "Estimated": True,
+                },
+            ]
+            print(cost_explorer.get_cost_and_usage_total())
+            assert cost_explorer.get_cost_and_usage_total() == OrderedDict(
+                [
+                    (
+                        "Total",
+                        OrderedDict(
+                            [("2019-12", 72.22), ("2020-01", 68.09), ("2020-02", 32.21)]
+                        ),
+                    )
+                ]
+            )
