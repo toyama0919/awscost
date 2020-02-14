@@ -21,7 +21,6 @@ from . import constants
     "--granularity",
     "-g",
     type=click.Choice(["DAILY", "MONTHLY"]),
-    default="MONTHLY",
     help="granularity. (default: MONTHLY)",
 )
 @click.option(
