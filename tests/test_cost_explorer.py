@@ -31,41 +31,67 @@ class TestCostExplorer(object):
 
     def test_get_cost_and_usage_group_by(self):
         cost_explorer = CostExplorer()
-        with patch.object(CostExplorerClient, 'get_cost_and_usage') as mock_foo:
+        with patch.object(CostExplorerClient, "get_cost_and_usage") as mock_foo:
             mock_foo.return_value = [
                 {
-                    'TimePeriod': {'Start': '2020-01-01', 'End': '2020-02-01'},
-                    'Total': {},
-                    'Groups': [
+                    "TimePeriod": {"Start": "2019-12-01", "End": "2020-01-01"},
+                    "Total": {},
+                    "Groups": [
                         {
-                            'Keys': ['AWS CloudTrail'],
-                            'Metrics': {'UnblendedCost': {'Amount': '4.380886', 'Unit': 'USD'}}
-                        },
-                        {
-                            'Keys': ['AWS Cost Explorer'],
-                            'Metrics': {'UnblendedCost': {'Amount': '0.02', 'Unit': 'USD'}}
-                        },
-                        {
-                            'Keys': ['AWS Key Management Service'],
-                            'Metrics': {'UnblendedCost': {'Amount': '4.002411936', 'Unit': 'USD'}}
-                        },
-                        {
-                            'Keys': ['AWS Lambda'],
-                            'Metrics': {'UnblendedCost': {'Amount': '0.0010751459', 'Unit': 'USD'}}
+                            "Keys": ["AWS CloudTrail"],
+                            "Metrics": {
+                                "UnblendedCost": {"Amount": "4.380886", "Unit": "USD"}
+                            },
                         },
                     ],
-                    'Estimated': False
+                    "Estimated": False,
                 },
                 {
-                    'TimePeriod': {'Start': '2019-12-01', 'End': '2020-01-01'},
-                    'Total': {},
-                    'Groups': [
+                    "TimePeriod": {"Start": "2020-01-01", "End": "2020-02-01"},
+                    "Total": {},
+                    "Groups": [
                         {
-                            'Keys': ['AWS CloudTrail'],
-                            'Metrics': {'UnblendedCost': {'Amount': '4.380886', 'Unit': 'USD'}}
+                            "Keys": ["AWS CloudTrail"],
+                            "Metrics": {
+                                "UnblendedCost": {"Amount": "4.380886", "Unit": "USD"}
+                            },
+                        },
+                        {
+                            "Keys": ["AWS Cost Explorer"],
+                            "Metrics": {
+                                "UnblendedCost": {"Amount": "0.02", "Unit": "USD"}
+                            },
+                        },
+                        {
+                            "Keys": ["AWS Key Management Service"],
+                            "Metrics": {
+                                "UnblendedCost": {
+                                    "Amount": "4.002411936",
+                                    "Unit": "USD",
+                                }
+                            },
+                        },
+                        {
+                            "Keys": ["AWS Lambda"],
+                            "Metrics": {
+                                "UnblendedCost": {
+                                    "Amount": "0.0010751459",
+                                    "Unit": "USD",
+                                }
+                            },
                         },
                     ],
-                    'Estimated': False
-                }
+                    "Estimated": False,
+                },
             ]
-            assert cost_explorer.get_cost_and_usage_group_by() == OrderedDict([('AWS CloudTrail', OrderedDict([('2020-01', 4.38), ('2019-12', 4.38)])), ('AWS Cost Explorer', OrderedDict([('2020-01', 0.02)])), ('AWS Key Management Service', OrderedDict([('2020-01', 4.0)])), ('AWS Lambda', OrderedDict([('2020-01', 0.0)]))])
+            assert cost_explorer.get_cost_and_usage_group_by() == OrderedDict(
+                [
+                    (
+                        "AWS CloudTrail",
+                        OrderedDict([("2019-12", 4.38), ("2020-01", 4.38)]),
+                    ),
+                    ("AWS Cost Explorer", OrderedDict([("2020-01", 0.02)])),
+                    ("AWS Key Management Service", OrderedDict([("2020-01", 4.0)])),
+                    ("AWS Lambda", OrderedDict([("2020-01", 0.0)])),
+                ]
+            )
