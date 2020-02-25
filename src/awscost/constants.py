@@ -35,7 +35,11 @@ AVAILABLE_METRICS = [
 ]
 
 # default value
-DEFAULT_CONFIG = f"{os.getenv('HOME')}/.awscost"
+DEFAULT_CONFIGS = [
+    f"{os.getcwd()}/.awscost",
+    f"{os.getenv('HOME')}/.awscost",
+    f"/etc/awscost",
+]
 DEFAULT_PROFILE = "default"
 
 DEFAULT_METRICS = "UnblendedCost"

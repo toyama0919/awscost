@@ -1,11 +1,10 @@
-import yaml
-import os
 from tabulate import tabulate
 from datetime import datetime
 from collections import OrderedDict
 from .logger import get_logger
 from .cost_explorer_client import CostExplorerClient
 from . import constants
+from .config import Config
 from .date_util import DateUtil
 
 
@@ -30,7 +29,7 @@ class CostExplorer:
         total=None,
     ):
         # read profile
-        profile = self._read_profile(config, profile)
+        profile = Config(config).get_profile(profile)
 
         self.granularity = (
             granularity or profile.get("granularity") or constants.DEFAULT_GRANULARITY
@@ -153,17 +152,6 @@ class CostExplorer:
         if self.granularity == "MONTHLY":
             return datetime.strptime(start_period, "%Y-%m-%d").strftime("%Y-%m")
         return datetime.strptime(start_period, "%Y-%m-%d").strftime("%m-%d")
-
-    def _read_profile(self, config, profile_name):
-        config = config or constants.DEFAULT_CONFIG
-        profile_name = profile_name or constants.DEFAULT_PROFILE
-        if config and os.path.exists(config):
-            profile = yaml.load(open(config, encoding="UTF-8").read()).get(profile_name)
-            if profile is None:
-                profile = {}
-        else:
-            profile = {}
-        return profile
 
     @staticmethod
     def pad_zero(total, group_by_results):
