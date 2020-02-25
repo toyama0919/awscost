@@ -7,7 +7,7 @@ class Config:
     def __init__(self, config_path):
         config_path = config_path or self._get_default_config_path()
         if config_path:
-            self.config = yaml.load(open(config_path, encoding="UTF-8").read())
+            self.config = yaml.load(open(config_path, encoding="UTF-8").read()) or {}
         else:
             self.config = {}
 
