@@ -1,3 +1,3 @@
 #!/bin/bash -eu
 
-tox -e twine
+tox -e release
