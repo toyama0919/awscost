@@ -23,7 +23,10 @@ from . import constants
     "--point",
     "-p",
     type=int,
-    help=f"duration. if granularity is MONTHLY, {constants.DEFAULT_POINT} month ago start. if granularity is DAILY, {constants.DEFAULT_POINT} day ago start. (default: {constants.DEFAULT_POINT})",
+    help=f"""duration.
+if granularity is MONTHLY, {constants.DEFAULT_POINT} month ago start.
+if granularity is DAILY, {constants.DEFAULT_POINT} day ago start.
+(default: {constants.DEFAULT_POINT})""",
 )
 @click.option(
     "--start",

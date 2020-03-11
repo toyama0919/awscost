@@ -58,13 +58,11 @@ class TestCostExplorer(object):
                         },
                         {
                             "Keys": ["AWS Key Management Service"],
-                            "Metrics": {"UnblendedCost": {"Amount": "4.002411936", "Unit": "USD",}},
+                            "Metrics": {"UnblendedCost": {"Amount": "4.002411936", "Unit": "USD"}},
                         },
                         {
                             "Keys": ["AWS Lambda"],
-                            "Metrics": {
-                                "UnblendedCost": {"Amount": "0.0010751459", "Unit": "USD",}
-                            },
+                            "Metrics": {"UnblendedCost": {"Amount": "0.0010751459", "Unit": "USD"}},
                         },
                     ],
                     "Estimated": False,
