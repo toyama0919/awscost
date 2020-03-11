@@ -4,23 +4,14 @@ from .logger import get_logger
 
 class CostExplorerClient:
     def __init__(
-        self,
-        granularity,
-        start,
-        end,
-        filter=None,
-        metrics=None,
-        aws_profile=None,
-        debug=False,
+        self, granularity, start, end, filter=None, metrics=None, aws_profile=None, debug=False,
     ):
         self.granularity = granularity
         self.start = start
         self.end = end
         self.filter = filter
         self.metrics = metrics
-        self.client = Session(profile_name=aws_profile).client(
-            "ce", region_name="us-east-1"
-        )
+        self.client = Session(profile_name=aws_profile).client("ce", region_name="us-east-1")
         self.logger = get_logger(debug=debug)
 
     def get_cost_and_usage(self, dimensions=None):

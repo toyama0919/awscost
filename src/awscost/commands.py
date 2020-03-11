@@ -8,12 +8,8 @@ from . import constants
 
 
 @click.command()
-@click.option(
-    "--debug/--no-debug", default=None, help="enable debug logging. (default: False)"
-)
-@click.option(
-    "--version/--no-version", "-v", default=False, help="show version. (default: False)"
-)
+@click.option("--debug/--no-debug", default=None, help="enable debug logging. (default: False)")
+@click.option("--version/--no-version", "-v", default=False, help="show version. (default: False)")
 @click.option("--config", "-c", type=str, help="config file.")
 @click.option("--profile", type=str, help="aws profile name.")
 @click.option("--aws-profile", type=str, help="aws profile name.")
@@ -27,7 +23,10 @@ from . import constants
     "--point",
     "-p",
     type=int,
-    help=f"duration. if granularity is MONTHLY, {constants.DEFAULT_POINT} month ago start. if granularity is DAILY, {constants.DEFAULT_POINT} day ago start. (default: {constants.DEFAULT_POINT})",
+    help=f"""duration.
+if granularity is MONTHLY, {constants.DEFAULT_POINT} month ago start.
+if granularity is DAILY, {constants.DEFAULT_POINT} day ago start.
+(default: {constants.DEFAULT_POINT})""",
 )
 @click.option(
     "--start",
@@ -42,11 +41,7 @@ from . import constants
     help="range of end day. default is now.",
 )
 @click.option(
-    "--tablefmt",
-    "-t",
-    type=str,
-    default="simple",
-    help="tabulate format. (default: simple)",
+    "--tablefmt", "-t", type=str, default="simple", help="tabulate format. (default: simple)",
 )
 @click.option(
     "--dimensions",
@@ -55,18 +50,14 @@ from . import constants
     multiple=True,
     help='group by dimensions. (default: ["SERVICE"])',
 )
-@click.option(
-    "--filter", type=json.loads, help="filter of dimensions. default is no filter."
-)
+@click.option("--filter", type=json.loads, help="filter of dimensions. default is no filter.")
 @click.option(
     "--metrics",
     type=click.Choice(constants.AVAILABLE_METRICS),
     default=constants.DEFAULT_METRICS,
     help="metrics. (default: UnblendedCost)",
 )
-@click.option(
-    "--total/--no-total", default=True, help="include total cost. (default: True)"
-)
+@click.option("--total/--no-total", default=True, help="include total cost. (default: True)")
 @click.pass_context
 def cli(
     ctx,
