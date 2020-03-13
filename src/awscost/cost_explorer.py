@@ -154,7 +154,7 @@ class CostExplorer:
         config = config or constants.DEFAULT_CONFIG
         profile_name = profile_name or constants.DEFAULT_PROFILE
         if config and os.path.exists(config):
-            profile = yaml.load(open(config, encoding="UTF-8").read()).get(profile_name)
+            profile = yaml.safe_load(open(config, encoding="UTF-8").read()).get(profile_name)
             if profile is None:
                 profile = {}
         else:
