@@ -1,3 +1,3 @@
 #!/bin/bash -eu
 
-pip install ".[test]"
+pip3 install ".[test]"
