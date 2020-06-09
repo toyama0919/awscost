@@ -7,6 +7,12 @@ Command Line utility for Provides aws cost very easy to see.
 
 Supports python 3.6 or later.
 
+## Install
+
+```bash
+$ pip install awscost
+```
+
 ## Examples
 
 ### show cost
