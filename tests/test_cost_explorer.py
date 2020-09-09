@@ -39,7 +39,9 @@ class TestCostExplorer(object):
                     "Groups": [
                         {
                             "Keys": ["AWS CloudTrail"],
-                            "Metrics": {"UnblendedCost": {"Amount": "4.380886", "Unit": "USD"}},
+                            "Metrics": {
+                                "UnblendedCost": {"Amount": "4.380886", "Unit": "USD"}
+                            },
                         },
                     ],
                     "Estimated": False,
@@ -50,19 +52,33 @@ class TestCostExplorer(object):
                     "Groups": [
                         {
                             "Keys": ["AWS CloudTrail"],
-                            "Metrics": {"UnblendedCost": {"Amount": "4.380886", "Unit": "USD"}},
+                            "Metrics": {
+                                "UnblendedCost": {"Amount": "4.380886", "Unit": "USD"}
+                            },
                         },
                         {
                             "Keys": ["AWS Cost Explorer"],
-                            "Metrics": {"UnblendedCost": {"Amount": "0.02", "Unit": "USD"}},
+                            "Metrics": {
+                                "UnblendedCost": {"Amount": "0.02", "Unit": "USD"}
+                            },
                         },
                         {
                             "Keys": ["AWS Key Management Service"],
-                            "Metrics": {"UnblendedCost": {"Amount": "4.002411936", "Unit": "USD"}},
+                            "Metrics": {
+                                "UnblendedCost": {
+                                    "Amount": "4.002411936",
+                                    "Unit": "USD",
+                                }
+                            },
                         },
                         {
                             "Keys": ["AWS Lambda"],
-                            "Metrics": {"UnblendedCost": {"Amount": "0.0010751459", "Unit": "USD"}},
+                            "Metrics": {
+                                "UnblendedCost": {
+                                    "Amount": "0.0010751459",
+                                    "Unit": "USD",
+                                }
+                            },
                         },
                     ],
                     "Estimated": False,
@@ -70,7 +86,10 @@ class TestCostExplorer(object):
             ]
             assert cost_explorer.get_cost_and_usage_group_by() == OrderedDict(
                 [
-                    ("AWS CloudTrail", OrderedDict([("2019-12", 4.38), ("2020-01", 4.38)]),),
+                    (
+                        "AWS CloudTrail",
+                        OrderedDict([("2019-12", 4.38), ("2020-01", 4.38)]),
+                    ),
                     ("AWS Cost Explorer", OrderedDict([("2020-01", 0.02)])),
                     ("AWS Key Management Service", OrderedDict([("2020-01", 4.0)])),
                     ("AWS Lambda", OrderedDict([("2020-01", 0.0)])),
@@ -83,19 +102,25 @@ class TestCostExplorer(object):
             mock_foo.return_value = [
                 {
                     "TimePeriod": {"Start": "2019-12-01", "End": "2020-01-01"},
-                    "Total": {"UnblendedCost": {"Amount": "72.2197813571", "Unit": "USD"}},
+                    "Total": {
+                        "UnblendedCost": {"Amount": "72.2197813571", "Unit": "USD"}
+                    },
                     "Groups": [],
                     "Estimated": False,
                 },
                 {
                     "TimePeriod": {"Start": "2020-01-01", "End": "2020-02-01"},
-                    "Total": {"UnblendedCost": {"Amount": "68.0906860747", "Unit": "USD"}},
+                    "Total": {
+                        "UnblendedCost": {"Amount": "68.0906860747", "Unit": "USD"}
+                    },
                     "Groups": [],
                     "Estimated": False,
                 },
                 {
                     "TimePeriod": {"Start": "2020-02-01", "End": "2020-02-14"},
-                    "Total": {"UnblendedCost": {"Amount": "32.2073391037", "Unit": "USD"}},
+                    "Total": {
+                        "UnblendedCost": {"Amount": "32.2073391037", "Unit": "USD"}
+                    },
                     "Groups": [],
                     "Estimated": True,
                 },
@@ -105,7 +130,9 @@ class TestCostExplorer(object):
                 [
                     (
                         "Total",
-                        OrderedDict([("2019-12", 72.22), ("2020-01", 68.09), ("2020-02", 32.21)]),
+                        OrderedDict(
+                            [("2019-12", 72.22), ("2020-01", 68.09), ("2020-02", 32.21)]
+                        ),
                     )
                 ]
             )

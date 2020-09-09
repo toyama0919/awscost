@@ -35,7 +35,9 @@ class CostExplorer:
         self.granularity = (
             granularity or profile.get("granularity") or constants.DEFAULT_GRANULARITY
         )
-        self.dimensions = dimensions or profile.get("dimensions") or constants.DEFAULT_DIMENSIONS
+        self.dimensions = (
+            dimensions or profile.get("dimensions") or constants.DEFAULT_DIMENSIONS
+        )
         self.metrics = metrics or profile.get("metrics") or constants.DEFAULT_METRICS
         self.total = total or profile.get("total") or constants.DEFAULT_TOTAL
         debug = debug or profile.get("debug") or constants.DEFAULT_DEBUG
@@ -44,7 +46,9 @@ class CostExplorer:
         aws_profile = aws_profile or profile.get("aws_profile")
         filter = filter or profile.get("filter")
         point = point or profile.get("point") or constants.DEFAULT_POINT
-        start = start or profile.get("start") or DateUtil.get_start(self.granularity, point)
+        start = (
+            start or profile.get("start") or DateUtil.get_start(self.granularity, point)
+        )
         end = end or profile.get("end") or datetime.today().strftime("%Y-%m-%d")
 
         self.cost_explorer_client = CostExplorerClient(
@@ -154,7 +158,9 @@ class CostExplorer:
         config = config or constants.DEFAULT_CONFIG
         profile_name = profile_name or constants.DEFAULT_PROFILE
         if config and os.path.exists(config):
-            profile = yaml.safe_load(open(config, encoding="UTF-8").read()).get(profile_name)
+            profile = yaml.safe_load(open(config, encoding="UTF-8").read()).get(
+                profile_name
+            )
             if profile is None:
                 profile = {}
         else:
