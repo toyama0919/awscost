@@ -242,13 +242,13 @@ plt.show()
 ### install test package
 
 ```
-$ ./scripts/install-ci.sh
+$ ./scripts/ci.sh install-test
 ```
 
 ### test
 
 ```
-$ ./scripts/run-ci.sh
+$ ./scripts/ci.sh run-test
 ```
 
 flake8 and black and pytest.
@@ -256,7 +256,7 @@ flake8 and black and pytest.
 ### release pypi
 
 ```
-$ ./scripts/release-ci.sh
+$ ./scripts/ci.sh release
 ```
 
 git tag and pypi release.
