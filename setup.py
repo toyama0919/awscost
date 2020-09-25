@@ -17,7 +17,7 @@ def read_version():
 
 
 install_requires = ["tabulate", "boto3", "click>=7.0", "pyyaml"]
-extras_require = {"test": ["tox"]}
+extras_require = {"test": ["tox", "pytest", "mock"]}
 
 setup(
     name="awscost",
