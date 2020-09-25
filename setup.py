@@ -17,11 +17,10 @@ def read_version():
 
 
 install_requires = ["tabulate", "boto3", "click>=7.0", "pyyaml"]
-extras_require = {"test": ["tox"]}
+extras_require = {"test": ["tox", "pytest", "mock"]}
 
 setup(
     name="awscost",
-    scripts=["bin/awscost"],
     version=read_version(),
     description="Command Line utility for cost of aws.",
     long_description=open(os.path.join(here, "README.md")).read(),

@@ -89,7 +89,7 @@ see. https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Get
 
 ### support filter
 
-```
+```bash
 awscost --filter '{
   "Not": {
     "Dimensions": {
@@ -102,7 +102,7 @@ awscost --filter '{
 
 ## config file($HOME/.awscost)
 
-```
+```yaml
 default:
   metrics: AmortizedCost
   filter:
@@ -124,7 +124,7 @@ discount:
 
 You can exec command as below.
 
-```
+```bash
 $ awscost --profile discount
 ```
 
@@ -221,7 +221,7 @@ plt.show()
 
 ## iam policy
 
-```
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -241,22 +241,22 @@ plt.show()
 
 ### install test package
 
-```
-$ ./scripts/install-ci.sh
+```bash
+$ ./scripts/ci.sh install-test
 ```
 
 ### test
 
-```
-$ ./scripts/run-ci.sh
+```bash
+$ ./scripts/ci.sh run-test
 ```
 
 flake8 and black and pytest.
 
 ### release pypi
 
-```
-$ ./scripts/release-ci.sh
+```bash
+$ ./scripts/ci.sh release
 ```
 
 git tag and pypi release.
