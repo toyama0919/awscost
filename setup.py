@@ -21,7 +21,6 @@ extras_require = {"test": ["tox", "pytest", "mock"]}
 
 setup(
     name="awscost",
-    scripts=["bin/awscost"],
     version=read_version(),
     description="Command Line utility for cost of aws.",
     long_description=open(os.path.join(here, "README.md")).read(),
