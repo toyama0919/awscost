@@ -5,7 +5,7 @@
 
 Command Line utility for Provides aws cost very easy to see.
 
-Supports python 3.6 or later.
+Supports python 3.7 or later.
 
 ## Install
 
@@ -189,7 +189,7 @@ cost_explorer = CostExplorer(
     "MONTHLY", start, end, dimensions=["SERVICE"], metrics="UnblendedCost"
 ).get_cost_and_usage_total_and_group_by()
 
-# return dict data. 
+# return dict data.
 cost_explorer # =>
 # {   'AWS CloudTrail': {'2019-11': 4.44, '2019-12': 6.17, '2020-01': 4.38},
 #     'AWS Lambda': {'2019-11': 0.0, '2019-12': 0.0, '2020-01': 0.0},
