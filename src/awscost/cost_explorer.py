@@ -28,6 +28,7 @@ class CostExplorer:
         aws_profile=None,
         debug=None,
         total=None,
+        threshold=None,
     ):
         # read profile
         profile = self._read_profile(config, profile)
@@ -42,6 +43,7 @@ class CostExplorer:
         self.total = total or profile.get("total") or constants.DEFAULT_TOTAL
         debug = debug or profile.get("debug") or constants.DEFAULT_DEBUG
         self.logger = get_logger(debug=debug)
+        self.threshold = threshold or constants.DEFAULT_THRESHOLD
 
         aws_profile = aws_profile or profile.get("aws_profile")
         filter = filter or profile.get("filter")
@@ -111,6 +113,12 @@ class CostExplorer:
             dimensions=self.dimensions
         )
         results = self._convert_results_group_by(cost_and_usage_per_service)
+        results = dict(
+            filter(
+                lambda item: max(list(item[1].values())) >= self.threshold,
+                results.items()
+            )
+        )
         return results
 
     def _convert_results_group_by(self, cost_and_usage_per_service):
