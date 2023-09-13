@@ -116,7 +116,7 @@ class CostExplorer:
         results = dict(
             filter(
                 lambda item: max(list(item[1].values())) >= self.threshold,
-                results.items()
+                results.items(),
             )
         )
         return results
