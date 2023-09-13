@@ -70,6 +70,11 @@ if granularity is DAILY, {constants.DEFAULT_POINT} day ago start.
 @click.option(
     "--total/--no-total", default=True, help="include total cost. (default: True)"
 )
+@click.option(
+    "--threshold",
+    type=float,
+    help=f"Threshold for display. (default: {constants.DEFAULT_THRESHOLD})",
+)
 @click.pass_context
 def cli(
     ctx,
@@ -87,6 +92,7 @@ def cli(
     filter,
     metrics,
     total,
+    threshold,
 ):
     if version:
         click.echo(awscost.VERSION)
@@ -105,6 +111,7 @@ def cli(
         debug=debug,
         aws_profile=aws_profile,
         total=total,
+        threshold=threshold,
     )
     click.echo(cost_explorer.to_tabulate(tablefmt=tablefmt))
 
