@@ -25,7 +25,7 @@ class CostExplorerClient:
 
     def get_cost_and_usage(self, dimensions=None):
         """
-        cost explorerのAPIを実行
+        Execute cost explorer API
         """
         params = self._make_params(dimensions)
         results = self.client.get_cost_and_usage(**params).get("ResultsByTime")
@@ -48,7 +48,7 @@ class CostExplorerClient:
 
     def _get_group_by(self, dimensions):
         """
-        listからgroup-byの構造に変換
+        Convert from list to group-by structure
         """
         if dimensions is None:
             return None

@@ -81,7 +81,8 @@ class CostExplorer:
 
     def get_cost_and_usage_total_and_group_by(self):
         """
-        startとendを指定してcostの時系列データを取得し、totalとgroup_byをmergeする
+        Get cost time series data by specifying start and end, and merge total and group_by
+
         """
         # totalを取得
         total = self.get_cost_and_usage_total()
@@ -98,7 +99,7 @@ class CostExplorer:
 
     def get_cost_and_usage_total(self):
         """
-        startとendを指定してcostの時系列データを取得する
+        Get cost time series data by specifying start and end
         """
         # totalを取得
         cost_and_usage = self.cost_explorer_client.get_cost_and_usage()
@@ -107,7 +108,7 @@ class CostExplorer:
 
     def get_cost_and_usage_group_by(self):
         """
-        startとendを指定してcostの時系列データを取得する
+        Get cost time series data by specifying start and end
         """
         cost_and_usage_per_service = self.cost_explorer_client.get_cost_and_usage(
             dimensions=self.dimensions
@@ -123,7 +124,7 @@ class CostExplorer:
 
     def _convert_results_group_by(self, cost_and_usage_per_service):
         """
-        group-byが指定されているデータ構造のparse
+        Parse data structure for which group-by is specified
         """
         results = OrderedDict()
         for result in cost_and_usage_per_service:
@@ -143,7 +144,7 @@ class CostExplorer:
 
     def _convert_results_total(self, cost_and_usage_per_service):
         """
-        Totalのデータ構造のparse
+        Parse the data structure of Total
         """
         results = OrderedDict([("Total", OrderedDict())])
         for result in cost_and_usage_per_service:
@@ -156,7 +157,7 @@ class CostExplorer:
 
     def _convert_period(self, start_period):
         """
-        headerに表示させる日付をmonthlyとdailyで切り替え
+        Switching the date displayed in the header between monthly and daily
         """
         if self.granularity == "MONTHLY":
             return datetime.strptime(start_period, "%Y-%m-%d").strftime("%Y-%m")
@@ -178,7 +179,7 @@ class CostExplorer:
     @staticmethod
     def pad_zero(total, group_by_results):
         """
-        値を0埋めする
+        Fill the value to zero
         """
         # 0埋めするためのdictを作成
         pad_zero = OrderedDict()
