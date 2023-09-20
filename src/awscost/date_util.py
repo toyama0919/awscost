@@ -6,7 +6,7 @@ class DateUtil:
     @staticmethod
     def get_start(granularity, point):
         """
-        datapointのscaleをmonth, week, dayで自動調節する
+        Automatic adjustment of datapoint scale by month, day
         """
         if granularity == "MONTHLY":
             days = 30 * point
