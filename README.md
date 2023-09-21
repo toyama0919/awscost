@@ -120,12 +120,20 @@ discount:
         - Credit
         - Refund
         - Upfront
+
+ec2:
+  filter:
+    Dimensions:
+      Key: SERVICE
+      Values:
+        - "EC2 - Other"
+        - "Amazon Elastic Compute Cloud - Compute"
 ```
 
 You can exec command as below.
 
 ```bash
-$ awscost --profile discount
+$ awscost --profile ec2
 ```
 
 ## Various format(-t option)
