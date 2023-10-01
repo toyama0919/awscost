@@ -43,7 +43,9 @@ class CostExplorer:
         self.total = total or profile.get("total") or constants.DEFAULT_TOTAL
         debug = debug or profile.get("debug") or constants.DEFAULT_DEBUG
         self.logger = get_logger(debug=debug)
-        self.threshold = threshold or constants.DEFAULT_THRESHOLD
+        self.threshold = (
+            threshold or profile.get("threshold") or constants.DEFAULT_THRESHOLD
+        )
 
         aws_profile = aws_profile or profile.get("aws_profile")
         filter = filter or profile.get("filter")

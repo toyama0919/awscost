@@ -120,12 +120,20 @@ discount:
         - Credit
         - Refund
         - Upfront
+
+ec2:
+  filter:
+    Dimensions:
+      Key: SERVICE
+      Values:
+        - "EC2 - Other"
+        - "Amazon Elastic Compute Cloud - Compute"
 ```
 
 You can exec command as below.
 
 ```bash
-$ awscost --profile discount
+$ awscost --profile ec2
 ```
 
 ## Various format(-t option)
@@ -186,7 +194,12 @@ start = (datetime.today() - relativedelta(months=3)).strftime("%Y-%m-01")
 end = datetime.today().strftime("%Y-%m-01")
 
 cost_explorer = CostExplorer(
-    granularity="MONTHLY", start=start, end=end, dimensions=["SERVICE"], metrics="UnblendedCost"
+    granularity="MONTHLY",
+    start=start,
+    end=end,
+    dimensions=["SERVICE"],
+    metrics="UnblendedCost",
+    threshold=1.0,
 ).get_cost_and_usage_total_and_group_by()
 
 # return dict data.
