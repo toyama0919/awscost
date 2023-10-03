@@ -61,7 +61,7 @@ if granularity is DAILY, {constants.DEFAULT_POINT} day ago start.
 @click.option(
     "--tags",
     multiple=True,
-    help='group by tags.',
+    help="group by tags.",
 )
 @click.option(
     "--filter", type=json.loads, help="filter of dimensions. default is no filter."

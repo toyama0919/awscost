@@ -34,30 +34,38 @@ class CostExplorer:
         # read profile
         profile = self._read_profile(config, profile)
 
-        self.granularity = (
-            granularity or profile.get("granularity") or constants.DEFAULT_GRANULARITY
+        self.granularity = self.get_not_none_first(
+            granularity, profile.get("granularity"), constants.DEFAULT_GRANULARITY
         )
-        self.dimensions = (
-            dimensions or profile.get("dimensions") or constants.DEFAULT_DIMENSIONS
+        self.dimensions = self.get_not_none_first(
+            dimensions or None, profile.get("dimensions"), constants.DEFAULT_DIMENSIONS
         )
-        self.tags = (
-            tags or profile.get("tags") or []
+        self.tags = self.get_not_none_first(tags or None, profile.get("tags"), [])
+        self.metrics = self.get_not_none_first(
+            metrics, profile.get("metrics"), constants.DEFAULT_METRICS
         )
-        self.metrics = metrics or profile.get("metrics") or constants.DEFAULT_METRICS
-        self.total = total or profile.get("total") or constants.DEFAULT_TOTAL
-        debug = debug or profile.get("debug") or constants.DEFAULT_DEBUG
+        self.total = self.get_not_none_first(
+            total, profile.get("total"), constants.DEFAULT_TOTAL
+        )
+        debug = self.get_not_none_first(
+            debug, profile.get("debug"), constants.DEFAULT_DEBUG
+        )
         self.logger = get_logger(debug=debug)
-        self.threshold = (
-            threshold or profile.get("threshold") or constants.DEFAULT_THRESHOLD
+        self.threshold = self.get_not_none_first(
+            threshold, profile.get("threshold"), constants.DEFAULT_THRESHOLD
         )
 
-        aws_profile = aws_profile or profile.get("aws_profile")
-        filter = filter or profile.get("filter")
-        point = point or profile.get("point") or constants.DEFAULT_POINT
-        start = (
-            start or profile.get("start") or DateUtil.get_start(self.granularity, point)
+        aws_profile = self.get_not_none_first(aws_profile, profile.get("aws_profile"))
+        filter = self.get_not_none_first(filter, profile.get("filter"))
+        point = self.get_not_none_first(
+            point, profile.get("point"), constants.DEFAULT_POINT
         )
-        end = end or profile.get("end") or datetime.today().strftime("%Y-%m-%d")
+        start = self.get_not_none_first(
+            start, profile.get("start"), DateUtil.get_start(self.granularity, point)
+        )
+        end = self.get_not_none_first(
+            end, profile.get("end"), datetime.today().strftime("%Y-%m-%d")
+        )
 
         self.cost_explorer_client = CostExplorerClient(
             self.granularity,
@@ -117,8 +125,7 @@ class CostExplorer:
         Get cost time series data by specifying start and end
         """
         cost_and_usage_per_service = self.cost_explorer_client.get_cost_and_usage(
-            dimensions=self.dimensions,
-            tags=self.tags
+            dimensions=self.dimensions, tags=self.tags
         )
         results = self._convert_results_group_by(cost_and_usage_per_service)
         results = dict(
@@ -198,3 +205,9 @@ class CostExplorer:
             merged = OrderedDict(pad_zero, **v)
             group_by_results_pad_zero[k] = merged
         return group_by_results_pad_zero
+
+    def get_not_none_first(self, *args):
+        for v in list(args):
+            if v is not None:
+                return v
+        return None
