@@ -38,9 +38,9 @@ class CostExplorer:
             granularity, profile.get("granularity"), constants.DEFAULT_GRANULARITY
         )
         self.dimensions = self.get_not_none_first(
-            dimensions or None, profile.get("dimensions"), constants.DEFAULT_DIMENSIONS
+            dimensions, profile.get("dimensions"), constants.DEFAULT_DIMENSIONS
         )
-        self.tags = self.get_not_none_first(tags or None, profile.get("tags"), [])
+        self.tags = self.get_not_none_first(tags, profile.get("tags"), [])
         self.metrics = self.get_not_none_first(
             metrics, profile.get("metrics"), constants.DEFAULT_METRICS
         )

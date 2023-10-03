@@ -111,8 +111,8 @@ def cli(
         end=end,
         config=config,
         profile=profile,
-        dimensions=dimensions,
-        tags=tags,
+        dimensions=dimensions or None,  # If multiple=True, it is converted to None because it contains ().
+        tags=tags or None,
         filter=filter,
         metrics=metrics,
         debug=debug,
