@@ -23,6 +23,7 @@ class CostExplorer:
         start=None,
         end=None,
         dimensions=None,
+        tags=None,
         filter=None,
         metrics=None,
         aws_profile=None,
@@ -38,6 +39,9 @@ class CostExplorer:
         )
         self.dimensions = (
             dimensions or profile.get("dimensions") or constants.DEFAULT_DIMENSIONS
+        )
+        self.tags = (
+            tags or profile.get("tags") or []
         )
         self.metrics = metrics or profile.get("metrics") or constants.DEFAULT_METRICS
         self.total = total or profile.get("total") or constants.DEFAULT_TOTAL
@@ -113,7 +117,8 @@ class CostExplorer:
         Get cost time series data by specifying start and end
         """
         cost_and_usage_per_service = self.cost_explorer_client.get_cost_and_usage(
-            dimensions=self.dimensions
+            dimensions=self.dimensions,
+            tags=self.tags
         )
         results = self._convert_results_group_by(cost_and_usage_per_service)
         results = dict(

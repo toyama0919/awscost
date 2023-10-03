@@ -59,6 +59,11 @@ if granularity is DAILY, {constants.DEFAULT_POINT} day ago start.
     help='group by dimensions. (default: ["SERVICE"])',
 )
 @click.option(
+    "--tags",
+    multiple=True,
+    help='group by tags.',
+)
+@click.option(
     "--filter", type=json.loads, help="filter of dimensions. default is no filter."
 )
 @click.option(
@@ -89,6 +94,7 @@ def cli(
     end,
     tablefmt,
     dimensions,
+    tags,
     filter,
     metrics,
     total,
@@ -106,6 +112,7 @@ def cli(
         config=config,
         profile=profile,
         dimensions=dimensions,
+        tags=tags,
         filter=filter,
         metrics=metrics,
         debug=debug,

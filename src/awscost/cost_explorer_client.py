@@ -23,22 +23,22 @@ class CostExplorerClient:
         )
         self.logger = get_logger(debug=debug)
 
-    def get_cost_and_usage(self, dimensions=None):
+    def get_cost_and_usage(self, dimensions=[], tags=[]):
         """
         Execute cost explorer API
         """
-        params = self._make_params(dimensions)
+        params = self._make_params(dimensions, tags)
         results = self.client.get_cost_and_usage(**params).get("ResultsByTime")
         self.logger.debug(results)
         return results
 
-    def _make_params(self, dimensions):
+    def _make_params(self, dimensions, tags):
         params = dict(
             TimePeriod={"Start": self.start, "End": self.end},
             Granularity=self.granularity,
             Metrics=[self.metrics],
         )
-        group_by = self._get_group_by(dimensions)
+        group_by = self._get_group_by(dimensions=dimensions, tags=tags)
         if group_by is not None:
             params["GroupBy"] = group_by
         if self.filter is not None:
@@ -46,10 +46,11 @@ class CostExplorerClient:
         self.logger.debug(params)
         return params
 
-    def _get_group_by(self, dimensions):
+    def _get_group_by(self, dimensions=[], tags=[]):
         """
         Convert from list to group-by structure
         """
-        if dimensions is None:
-            return None
-        return [{"Type": "DIMENSION", "Key": key} for key in dimensions]
+        group_by = [{"Type": "DIMENSION", "Key": key} for key in dimensions]
+        for tag in tags:
+            group_by.append({"Type": "TAG", "Key": tag})
+        return group_by
