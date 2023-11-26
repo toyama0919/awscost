@@ -133,7 +133,29 @@ ec2:
 You can exec command as below.
 
 ```bash
+$ awscost --profile default
+$ awscost --profile discount
 $ awscost --profile ec2
+```
+
+#### group by tag
+
+You can set up a group by tag as follows
+
+Currently, this cannot be achieved using only the command line
+
+
+```yaml
+tag_service:
+  tags:
+    - Service
+  dimensions: []
+```
+
+You can exec command as below.
+
+```bash
+$ awscost --profile tag_service
 ```
 
 ## Various format(-t option)
