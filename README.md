@@ -102,7 +102,7 @@ awscost --filter '{
 
 ## config file($HOME/.awscost)
 
-```yaml
+```yaml:$HOME/.awscost
 default:
   metrics: AmortizedCost
   filter:
@@ -145,7 +145,7 @@ You can set up a group by tag as follows
 Currently, this cannot be achieved using only the command line
 
 
-```yaml
+```yaml:$HOME/.awscost
 tag_service:
   tags:
     - Service
