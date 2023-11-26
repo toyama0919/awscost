@@ -140,22 +140,25 @@ $ awscost --profile ec2
 
 #### group by tag
 
-You can set up a group by tag as follows
+You can set up a group by tag.
 
-Currently, this cannot be achieved using only the command line
+Currently, this cannot be achieved using only the command line.
 
+Write the following in yaml in $HOME/.awscost
+
+The following is an example of grouping by the tag "Product"
 
 ```yaml:$HOME/.awscost
-tag_service:
+tag:
   tags:
-    - Service
+    - Product
   dimensions: []
 ```
 
 You can exec command as below.
 
 ```bash
-$ awscost --profile tag_service
+$ awscost --profile tag
 ```
 
 ## Various format(-t option)
