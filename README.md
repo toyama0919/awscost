@@ -102,7 +102,7 @@ awscost --filter '{
 
 ## config file($HOME/.awscost)
 
-```yaml
+```yaml:$HOME/.awscost
 default:
   metrics: AmortizedCost
   filter:
@@ -133,7 +133,32 @@ ec2:
 You can exec command as below.
 
 ```bash
+$ awscost --profile default
+$ awscost --profile discount
 $ awscost --profile ec2
+```
+
+#### group by tag
+
+You can set up a group by tag.
+
+Currently, this cannot be achieved using only the command line.
+
+Write the following in yaml in $HOME/.awscost
+
+The following is an example of grouping by the tag "Product"
+
+```yaml:$HOME/.awscost
+tag:
+  tags:
+    - Product
+  dimensions: []
+```
+
+You can exec command as below.
+
+```bash
+$ awscost --profile tag
 ```
 
 ## Various format(-t option)
