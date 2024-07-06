@@ -28,7 +28,7 @@ dependencies = [
 package-dir = {"" = "src"}
 
 [project.optional-dependencies]
-dev = [
+test = [
   "tox",
   "pytest",
   "mock",
