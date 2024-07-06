@@ -1,0 +1,41 @@
+[project]
+name = "awscost"
+version = "0.3.1"
+description = "Command Line utility for cost of aws."
+authors = [{ name="Hiroshi Toyama", email="toyama0919@gmail.com" }]
+readme = "README.md"
+classifiers = [
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+keywords = [
+  "awscost",
+  "tool",
+  "aws",
+]
+requires-python = ">=3.7"
+dependencies = [
+  "tabulate",
+  "boto3",
+  "click>=7.0",
+  "pyyaml"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[project.optional-dependencies]
+dev = [
+  "tox",
+  "pytest",
+  "mock",
+]
+
+[project.scripts]
+awscost = "awscost.commands:main"
+
+[project.urls]
+"Homepage" = "https://github.com/toyama0919/awscost"
