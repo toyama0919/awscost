@@ -32,6 +32,7 @@ test = [
   "tox",
   "pytest",
   "mock",
+  "build",
 ]
 
 [project.scripts]

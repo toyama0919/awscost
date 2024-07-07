@@ -14,7 +14,8 @@ release() {
   # upload pypi
   tox -e release
   # git tag
-  git tag v$(python setup.py --version)
+  VERSION=$(grep -m 1 version pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
+  git tag v${VERSION}
   git push origin --tags
 }
 
