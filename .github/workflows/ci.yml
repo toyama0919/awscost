@@ -3,6 +3,7 @@ name: ci
 on:
   push:
     paths:
+    - 'pyproject.toml'
     - 'src/**.py'
     - 'tests/**.py'
     - 'scripts/**'
