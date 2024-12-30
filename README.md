@@ -5,7 +5,7 @@
 
 Command Line utility for Provides aws cost very easy to see.
 
-Supports python 3.7 or later.
+Supports python 3.8 or later.
 
 ## Install
 
