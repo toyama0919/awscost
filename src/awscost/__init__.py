@@ -1,3 +1,3 @@
-import pkg_resources
+from importlib.metadata import version
 
-VERSION = pkg_resources.get_distribution("awscost").version
+VERSION = version("awscost")

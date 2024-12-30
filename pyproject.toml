@@ -1,22 +1,22 @@
 [project]
 name = "awscost"
-version = "0.3.2"
+version = "0.4.0"
 description = "Command Line utility for cost of aws."
 authors = [{ name="Hiroshi Toyama", email="toyama0919@gmail.com" }]
 readme = "README.md"
 classifiers = [
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
 keywords = [
   "awscost",
   "tool",
   "aws",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 dependencies = [
   "tabulate",
   "boto3",
@@ -32,6 +32,7 @@ test = [
   "tox",
   "pytest",
   "mock",
+  "build",
 ]
 
 [project.scripts]
