@@ -47,7 +47,7 @@ target-version = "py38"
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I"]
-ignore = ["E501", "W503"]
+ignore = ["E501"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["awscost"]

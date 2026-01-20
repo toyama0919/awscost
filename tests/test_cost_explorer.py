@@ -1,7 +1,9 @@
+from collections import OrderedDict
+
+from mock import patch
+
 from awscost.cost_explorer import CostExplorer
 from awscost.cost_explorer_client import CostExplorerClient
-from mock import patch
-from collections import OrderedDict
 
 
 class TestCostExplorer(object):
