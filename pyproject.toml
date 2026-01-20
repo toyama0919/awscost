@@ -40,3 +40,15 @@ awscost = "awscost.commands:main"
 
 [project.urls]
 "Homepage" = "https://github.com/toyama0919/awscost"
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I"]
+ignore = ["E501", "W503"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["awscost"]
+force-sort-within-sections = true
