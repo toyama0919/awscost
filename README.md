@@ -289,7 +289,7 @@ $ ./scripts/ci.sh install-test
 $ ./scripts/ci.sh run-test
 ```
 
-flake8 and black and pytest.
+ruff and pytest.
 
 ### release pypi
 

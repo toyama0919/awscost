@@ -1,7 +1,8 @@
+from click.testing import CliRunner
 import pytest
+
 import awscost
 from awscost import commands
-from click.testing import CliRunner
 
 
 @pytest.fixture(scope="module")

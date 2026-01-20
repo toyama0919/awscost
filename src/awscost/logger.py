@@ -1,5 +1,5 @@
 import logging
-from logging import getLogger, INFO, DEBUG
+from logging import DEBUG, INFO, getLogger
 
 
 def get_logger(debug=False):
