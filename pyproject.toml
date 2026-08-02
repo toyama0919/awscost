@@ -29,10 +29,11 @@ package-dir = {"" = "src"}
 
 [project.optional-dependencies]
 test = [
-  "tox",
   "pytest",
   "mock",
   "build",
+  "ruff",
+  "twine",
 ]
 
 [project.scripts]

@@ -5,13 +5,16 @@ install-test() {
 }
 
 run-test() {
-  tox -e ruff
-  tox -e pytest
+  ruff check src tests
+  ruff format --check --diff ./
+  pytest -v --capture=no
 }
 
 release() {
   # upload pypi
-  tox -e release
+  rm -rf dist
+  python -m build -s
+  twine upload --verbose dist/*.tar.gz
   # git tag
   VERSION=$(grep -m 1 version pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
   git tag v${VERSION}
