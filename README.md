@@ -228,12 +228,11 @@ cost_explorer = CostExplorer(
 ).get_cost_and_usage_total_and_group_by()
 
 # return dict data.
-cost_explorer # =>
+cost_explorer  # =>
 # {   'AWS CloudTrail': {'2019-11': 4.44, '2019-12': 6.17, '2020-01': 4.38},
 #     'AWS Lambda': {'2019-11': 0.0, '2019-12': 0.0, '2020-01': 0.0},
 # ...
 #     'Total': {'2019-11': 67.15, '2019-12': 72.22, '2020-01': 68.11}}
-
 ```
 
 ### matplotlib
@@ -244,17 +243,16 @@ cost_explorer # =>
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(25, 15), dpi=100)
-plt.xlabel('month', fontsize=16)
-plt.ylabel('$', fontsize=16)
+plt.xlabel("month", fontsize=16)
+plt.ylabel("$", fontsize=16)
 plt.grid(True)
 for i, (service_name, v) in enumerate(cost_explorer.items()):
     left = list(v.keys())
     height = list(v.values())
-    plt.plot(left, height, linewidth=2, label=service_name, marker='o')
-plt.legend(loc='best', fontsize=15, numpoints=5)
+    plt.plot(left, height, linewidth=2, label=service_name, marker="o")
+plt.legend(loc="best", fontsize=15, numpoints=5)
 
 plt.show()
-
 ```
 
 ## iam policy
