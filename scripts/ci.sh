@@ -11,11 +11,7 @@ run-test() {
 }
 
 release() {
-  # upload pypi
-  rm -rf dist
-  python -m build -s
-  twine upload --verbose dist/*.tar.gz
-  # git tag
+  # push a git tag; the release workflow uploads to PyPI on tag push
   VERSION=$(grep -m 1 version pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
   git tag v${VERSION}
   git push origin --tags

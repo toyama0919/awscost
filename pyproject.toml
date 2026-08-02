@@ -33,7 +33,6 @@ test = [
   "mock",
   "build",
   "ruff",
-  "twine",
 ]
 
 [project.scripts]
