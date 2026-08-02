@@ -1,8 +1,9 @@
 # awscost
 
-[![PyPI version](https://badge.fury.io/py/awscost.svg)](https://badge.fury.io/py/awscost)
-[![Build Status](https://github.com/toyama0919/awscost/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/toyama0919/awscost/actions/workflows/ci.yml)
-[![Release](https://github.com/toyama0919/awscost/actions/workflows/release.yml/badge.svg)](https://github.com/toyama0919/awscost/actions/workflows/release.yml)
+[![CI](https://github.com/toyama0919/awscost/actions/workflows/ci.yml/badge.svg)](https://github.com/toyama0919/awscost/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/awscost.svg)](https://pypi.org/project/awscost/)
+[![Python versions](https://img.shields.io/pypi/pyversions/awscost.svg)](https://pypi.org/project/awscost/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Command Line utility for Provides aws cost very easy to see.
 

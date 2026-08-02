@@ -4,6 +4,8 @@ version = "0.4.0"
 description = "Command Line utility for cost of aws."
 authors = [{ name="Hiroshi Toyama", email="toyama0919@gmail.com" }]
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
