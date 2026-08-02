@@ -5,14 +5,13 @@ install-test() {
 }
 
 run-test() {
-  tox -e ruff
-  tox -e pytest
+  ruff check src tests
+  ruff format --check --diff ./
+  pytest -v --capture=no
 }
 
 release() {
-  # upload pypi
-  tox -e release
-  # git tag
+  # push a git tag; the release workflow uploads to PyPI on tag push
   VERSION=$(grep -m 1 version pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
   git tag v${VERSION}
   git push origin --tags
