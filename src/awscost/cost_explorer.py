@@ -32,6 +32,7 @@ class CostExplorer:
         debug=None,
         total=None,
         threshold=None,
+        cost_explorer_client=None,
     ):
         # read profile
         profile = self._read_profile(config, profile)
@@ -69,7 +70,8 @@ class CostExplorer:
             end, profile.get("end"), datetime.today().strftime("%Y-%m-%d")
         )
 
-        self.cost_explorer_client = CostExplorerClient(
+        # ``cost_explorer_client`` can be injected for testing.
+        self.cost_explorer_client = cost_explorer_client or CostExplorerClient(
             self.granularity,
             start,
             end,

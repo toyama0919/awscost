@@ -13,13 +13,16 @@ class CostExplorerClient:
         metrics=None,
         aws_profile=None,
         debug=False,
+        client=None,
     ):
         self.granularity = granularity
         self.start = start
         self.end = end
         self.filter = filter
         self.metrics = metrics
-        self.client = Session(profile_name=aws_profile).client(
+        # ``client`` can be injected for testing. Otherwise build a real
+        # cost explorer client from the given aws profile.
+        self.client = client or Session(profile_name=aws_profile).client(
             "ce", region_name="us-east-1"
         )
         self.logger = get_logger(debug=debug)
