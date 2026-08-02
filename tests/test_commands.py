@@ -21,9 +21,7 @@ def _api_response(dimensions=None, tags=None):
                 "Groups": [
                     {
                         "Keys": ["EC2"],
-                        "Metrics": {
-                            "UnblendedCost": {"Amount": "18.0", "Unit": "USD"}
-                        },
+                        "Metrics": {"UnblendedCost": {"Amount": "18.0", "Unit": "USD"}},
                     }
                 ],
             }
