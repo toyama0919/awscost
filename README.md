@@ -2,6 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/awscost.svg)](https://badge.fury.io/py/awscost)
 [![Build Status](https://github.com/toyama0919/awscost/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/toyama0919/awscost/actions/workflows/ci.yml)
+[![Release](https://github.com/toyama0919/awscost/actions/workflows/release.yml/badge.svg)](https://github.com/toyama0919/awscost/actions/workflows/release.yml)
 
 Command Line utility for Provides aws cost very easy to see.
 
@@ -295,4 +296,4 @@ ruff and pytest.
 $ ./scripts/ci.sh release
 ```
 
-git tag and pypi release.
+Push a git tag; the release workflow uploads to PyPI on tag push (Trusted Publishing).
