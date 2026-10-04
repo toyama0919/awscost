@@ -7,18 +7,18 @@ readme = "README.md"
 license = { file = "LICENSE" }
 classifiers = [
   "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 keywords = [
   "awscost",
   "tool",
   "aws",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = [
   "tabulate",
   "boto3",
@@ -45,7 +45,7 @@ awscost = "awscost.commands:main"
 
 [tool.ruff]
 line-length = 88
-target-version = "py38"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I"]
